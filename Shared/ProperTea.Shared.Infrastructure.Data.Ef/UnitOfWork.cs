@@ -4,9 +4,9 @@ using ProperTea.Shared.Application;
 using ProperTea.Shared.Domain;
 using ProperTea.Shared.Domain.DomainEvents;
 
-namespace ProperTea.Shared.Infrastructure.Data;
+namespace ProperTea.Shared.Infrastructure.Data.Ef;
 
-public class UnitOfWorkEf(DbContext dbContext, IDomainEventDispatcher dispatcher)
+public class UnitOfWork(DbContext dbContext, IDomainEventDispatcher dispatcher)
     : IUnitOfWork
 {
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

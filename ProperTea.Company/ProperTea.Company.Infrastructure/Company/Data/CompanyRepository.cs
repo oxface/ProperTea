@@ -1,21 +1,18 @@
-using Microsoft.EntityFrameworkCore;
-
 using ProperTea.Company.Domain.Company;
-using ProperTea.Shared.Infrastructure.Data;
+using ProperTea.Shared.Infrastructure.Data.Ef;
 
 namespace ProperTea.Company.Infrastructure.Company.Data;
 
 public class CompanyRepository(CompanyDbContext context)
-    : RepositoryBase<Domain.Company.Company>(context), ICompanyRepository
+    : RepositoryBase<Domain.Company.Company, CompanyFilter>(context), ICompanyRepository
 {
-    public async Task<IEnumerable<Domain.Company.Company>> GetByFilterAsync(
-        CompanyFilter filter,
-        CancellationToken ct = default)
+    protected override IQueryable<Domain.Company.Company> ApplyFilter(
+        IQueryable<Domain.Company.Company> query, 
+        CompanyFilter filter)
     {
-        var items = context.Companies.AsQueryable();
         if (!string.IsNullOrEmpty(filter.Name))
-            items = items.Where(i => i.Name.Contains(filter.Name));
+            query = query.Where(i => i.Name.Contains(filter.Name));
 
-        return await IncludeRelatedData(items).ToListAsync(ct);
+        return query;
     }
 }

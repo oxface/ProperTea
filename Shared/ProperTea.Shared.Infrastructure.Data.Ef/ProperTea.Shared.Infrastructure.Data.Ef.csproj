@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ProperTea.Shared.Application\ProperTea.Shared.Application.csproj"/>
+        <ProjectReference Include="..\ProperTea.Shared.Infrastructure\ProperTea.Shared.Infrastructure.csproj"/>
+        <ProjectReference Include="..\ProperTea.Shared.Domain\ProperTea.Shared.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+    </ItemGroup>
+    
+</Project>

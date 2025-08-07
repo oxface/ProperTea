@@ -11,6 +11,7 @@ using ProperTea.Shared.Application.Queries;
 using ProperTea.Shared.Domain;
 using ProperTea.Shared.Domain.DomainEvents;
 using ProperTea.Shared.Infrastructure.Data;
+using ProperTea.Shared.Infrastructure.Data.Ef;
 using ProperTea.Shared.Infrastructure.Events;
 
 namespace ProperTea.Company.Api.Setup;
@@ -68,11 +69,11 @@ public static class InfrastructureServices
     {
         services.Scan(scan => scan
             .FromAssemblyOf<CompanyRepository>()
-            .AddClasses(classes => classes.AssignableTo(typeof(IRepository<>)))
+            .AddClasses(classes => classes.AssignableTo(typeof(IRepository<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
 
-        services.AddScoped<IUnitOfWork, UnitOfWorkEf>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 
