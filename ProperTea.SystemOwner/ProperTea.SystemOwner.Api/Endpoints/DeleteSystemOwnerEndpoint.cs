@@ -7,13 +7,15 @@ public static class DeleteSystemOwnerEndpoint
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapDelete("/system-owner/{id:guid}",
+        endpoints.MapDelete(
+            "/system-owner/{id:guid}",
             async (Guid id, ICommandHandler<DeleteSystemOwnerCommand> handler) =>
             {
-                await handler.HandleAsync(new DeleteSystemOwnerCommand
-                {
-                    Id = id
-                });
+                await handler.HandleAsync(
+                    new DeleteSystemOwnerCommand
+                    {
+                        Id = id
+                    });
                 return Results.NoContent();
             });
     }

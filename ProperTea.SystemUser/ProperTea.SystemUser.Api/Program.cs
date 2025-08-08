@@ -1,43 +1,51 @@
-using ProperTea.SystemUser.Api;
+using System.Text.Json.Serialization;
+
+using ProperTea.Shared.ServiceDefaults;
+using ProperTea.SystemUser.Api.Endpoints;
+using ProperTea.SystemUser.Api.Setup;
+
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.AddServiceDefaults();
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+    .AddEnvironmentVariables();
+
+builder.Services.AddGlobalErrorHandling();
+
+builder.Services
+    .AddDomainServices()
+    .AddDataServices(builder.Configuration)
+    .AddInfrastructureServices()
+    .AddApplicationServices();
+
+builder.Services.AddDaprClient();
+builder.Services.AddControllers().AddDapr();
+
 builder.Services.AddOpenApi();
+
+builder.Services.ConfigureHttpJsonOptions(options => { options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) app.MapOpenApi();
+app.UseCloudEvents();
+app.MapSubscribeHandler();
+
+app.MapOpenApi();
+if (app.Environment.IsDevelopment()) app.MapScalarApiReference();
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
+if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+app.MapDefaultEndpoints()
+    .MapSystemUserEndpoints();
 
 app.Run();
-
-namespace ProperTea.SystemUser.Api
-{
-    internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
-}

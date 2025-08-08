@@ -16,22 +16,23 @@ public class GlobalExceptionHandler(IProblemDetailsService problemDetailsService
     {
         var (statusCode, title, detail, errors) = GetProblemDetails(exception);
 
-        return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
-        {
-            HttpContext = httpContext,
-            ProblemDetails =
+        return await problemDetailsService.TryWriteAsync(
+            new ProblemDetailsContext
             {
-                Status = statusCode,
-                Title = title,
-                Detail = detail,
-                Type = exception.GetType().Name,
-                Extensions =
+                HttpContext = httpContext,
+                ProblemDetails =
                 {
-                    ["errors"] = errors
-                }
-            },
-            Exception = exception
-        });
+                    Status = statusCode,
+                    Title = title,
+                    Detail = detail,
+                    Type = exception.GetType().Name,
+                    Extensions =
+                    {
+                        ["errors"] = errors
+                    }
+                },
+                Exception = exception
+            });
     }
 
     private static (int StatusCode, string Title, string Detail, object? Errors) GetProblemDetails(Exception exception)

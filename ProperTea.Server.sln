@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Infrastructure", "ProperTea.SystemUser\ProperTea.SystemUser.Infrastructure\ProperTea.SystemUser.Infrastructure.csproj", "{90705329-1432-4691-BE41-24C33CDE6A2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.MigrationService", "ProperTea.SystemOwner\ProperTea.SystemUser.MigrationService\ProperTea.SystemUser.MigrationService.csproj", "{E2CDB905-DFD6-431F-9484-D4A57D1974CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,7 @@ Global
 		{BE3DA515-04BA-4773-A56C-308643E490EE} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 		{F4999175-559C-4A54-9670-34F9EAEAB5E9} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 		{90705329-1432-4691-BE41-24C33CDE6A2F} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
+		{E2CDB905-DFD6-431F-9484-D4A57D1974CC} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2813E7DA-A22C-43AE-B26A-1E6C638D8940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -174,5 +177,9 @@ Global
 		{90705329-1432-4691-BE41-24C33CDE6A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90705329-1432-4691-BE41-24C33CDE6A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90705329-1432-4691-BE41-24C33CDE6A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

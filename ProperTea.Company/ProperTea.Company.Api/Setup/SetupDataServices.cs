@@ -6,7 +6,8 @@ namespace ProperTea.Company.Api.Setup;
 
 public static class DataServices
 {
-    public static IServiceCollection AddDataServices(this IServiceCollection services,
+    public static IServiceCollection AddDataServices(
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddDbContext<CompanyDbContext>(options =>

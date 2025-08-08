@@ -12,6 +12,8 @@ public static class SystemOwnerServiceResources
         this IDistributedApplicationBuilder builder,
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder)
     {
+        // Ports 5000-5099.
+        // 10 ports per service.
         var db = sqlServerBuilder.AddDatabase("propertea-systemowner-db");
         var migrations = builder.AddProject<ProperTea_SystemOwner_MigrationService>(
                 "systemowner-migrations")
@@ -22,9 +24,9 @@ public static class SystemOwnerServiceResources
         {
             AppId = "systemowner-api-sidecar",
             AppPort = 5000,
-            DaprHttpPort = 5010,
-            DaprGrpcPort = 5011,
-            MetricsPort = 5012
+            DaprHttpPort = 5001,
+            DaprGrpcPort = 5002,
+            MetricsPort = 5003
         };
         var api = builder
             .AddProject<ProperTea_SystemOwner_Api>("systemowner-api")

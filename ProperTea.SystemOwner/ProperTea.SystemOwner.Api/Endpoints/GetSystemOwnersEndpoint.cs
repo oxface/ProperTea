@@ -10,7 +10,8 @@ public static class GetSystemOwnersEndpoint
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/system-owner",
+        endpoints.MapGet(
+            "/system-owner",
             async (HttpRequest request, IQueryHandler<GetSystemOwnersByFilterQuery, PagedResult<SystemOwnerModel>> handler) =>
             {
                 var filter = new SystemOwnerFilter

@@ -7,7 +7,8 @@ public static class ChangeSystemOwnerNameEndpoint
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPut("/system-owner/{id:guid}/name",
+        endpoints.MapPut(
+            "/system-owner/{id:guid}/name",
             async (ChangeSystemOwnerNameCommand command, Guid id, ICommandHandler<ChangeSystemOwnerNameCommand> handler) =>
             {
                 command.Id = id;

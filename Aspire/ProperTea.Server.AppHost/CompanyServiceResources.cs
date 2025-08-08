@@ -13,6 +13,8 @@ public static class CompanyServiceResources
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder,
         IResourceBuilder<ProjectResource> systemOwnerApiBuilder)
     {
+        // Ports 5200-5299.
+        // 10 ports per service.
         var db = sqlServerBuilder.AddDatabase("propertea-company-db");
         var migrations = builder.AddProject<ProperTea_Company_MigrationService>(
                 "company-migrations")
@@ -22,19 +24,19 @@ public static class CompanyServiceResources
         var apiSidecar = new DaprSidecarOptions
         {
             AppId = "company-api-sidecar",
-            AppPort = 5000,
-            DaprHttpPort = 5010,
-            DaprGrpcPort = 5011,
-            MetricsPort = 5012
+            AppPort = 5200,
+            DaprHttpPort = 5201,
+            DaprGrpcPort = 5202,
+            MetricsPort = 5003
         };
         var api = builder
             .AddProject<ProperTea_Company_Api>("company-api")
             .WithReference(db)
-            .WithReference(migrations)
-            .WaitForCompletion(migrations)
             .WaitFor(db)
             .WithReference(systemOwnerApiBuilder)
             .WaitFor(systemOwnerApiBuilder)
+            .WithReference(migrations)
+            .WaitForCompletion(migrations)
             .WithDaprSidecar(apiSidecar)
             .WithOtlpExporter()
             .WithHttpHealthCheck("/health")

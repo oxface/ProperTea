@@ -7,7 +7,8 @@ namespace ProperTea.Company.Domain;
 public class CompanyDomainService(ICompanyRepository repository, IDomainEventDispatcher eventDispatcher)
     : DomainServiceBase, ICompanyDomainService
 {
-    public async Task<Company> CreateCompanyAsync(string name,
+    public async Task<Company> CreateCompanyAsync(
+        string name,
         Guid systemOwnerId,
         CancellationToken ct = default)
     {

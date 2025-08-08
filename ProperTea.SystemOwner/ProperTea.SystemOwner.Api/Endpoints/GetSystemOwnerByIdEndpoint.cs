@@ -8,13 +8,15 @@ public static class GetSystemOwnerByIdEndpoint
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/system-owner/{id:guid}",
+        endpoints.MapGet(
+            "/system-owner/{id:guid}",
             async (Guid id, IQueryHandler<GetSystemOwnerByIdQuery, SystemOwnerModel> handler) =>
             {
-                var result = await handler.HandleAsync(new GetSystemOwnerByIdQuery
-                {
-                    Id = id
-                });
+                var result = await handler.HandleAsync(
+                    new GetSystemOwnerByIdQuery
+                    {
+                        Id = id
+                    });
                 return Results.Ok(result);
             });
     }

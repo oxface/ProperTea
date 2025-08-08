@@ -14,7 +14,8 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Co
             .IsRequired()
             .HasMaxLength(200);
 
-        builder.HasIndex(nameof(Domain.Company.Name),
+        builder.HasIndex(
+                nameof(Domain.Company.Name),
                 nameof(Domain.Company.SystemOwnerId))
             .IsUnique()
             .HasDatabaseName("IX_Company_Name");

@@ -10,6 +10,7 @@ var azureSql = builder.AddAzureSqlServer("propertea-sql")
     });
 
 var systemOwnerApi = builder.RegisterSystemOwnerServiceResources(azureSql);
+var systemUserApi = builder.RegisterSystemUserServiceResources(azureSql, systemOwnerApi);
 var companyApi = builder.RegisterCompanyServiceResources(azureSql, systemOwnerApi);
 
 builder.Build().Run();

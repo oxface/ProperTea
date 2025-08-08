@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-ProperTea.SystemUser.MigrationService-34652569-5ea1-4fec-9aef-b8137917e230</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Hosting"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\ProperTea.SystemUser\ProperTea.SystemUser.Infrastructure\ProperTea.SystemUser.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\Shared\ProperTea.Shared.ServiceDefaults\ProperTea.Shared.ServiceDefaults.csproj"/>
+    </ItemGroup>
+</Project>

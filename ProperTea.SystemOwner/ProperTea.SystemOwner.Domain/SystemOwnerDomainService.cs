@@ -7,7 +7,8 @@ namespace ProperTea.SystemOwner.Domain;
 public class SystemOwnerDomainService(ISystemOwnerRepository repository, IDomainEventDispatcher eventDispatcher)
     : DomainServiceBase, ISystemOwnerDomainService
 {
-    public async Task<SystemOwner> CreateSystemOwnerAsync(string name,
+    public async Task<SystemOwner> CreateSystemOwnerAsync(
+        string name,
         CancellationToken ct = default)
     {
         var systemOwner = SystemOwner.Create(name);

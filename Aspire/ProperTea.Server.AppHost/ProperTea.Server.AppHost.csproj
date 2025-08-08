@@ -22,6 +22,8 @@
         <ProjectReference Include="..\..\ProperTea.Company\ProperTea.Company.MigrationService\ProperTea.Company.MigrationService.csproj"/>
         <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemOwner.Api\ProperTea.SystemOwner.Api.csproj"/>
         <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemOwner.MigrationService\ProperTea.SystemOwner.MigrationService.csproj"/>
+        <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemUser.MigrationService\ProperTea.SystemUser.MigrationService.csproj"/>
+        <ProjectReference Include="..\..\ProperTea.SystemUser\ProperTea.SystemUser.Api\ProperTea.SystemUser.Api.csproj"/>
     </ItemGroup>
 
 </Project>

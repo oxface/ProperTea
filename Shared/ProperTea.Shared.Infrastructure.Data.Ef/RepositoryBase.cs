@@ -62,7 +62,8 @@ public abstract class RepositoryBase<T, TFilter>(DbContext context) : IRepositor
     {
         var query = BaseQuery;
         query = ApplyFilter(query, filter);
-        if (sortRequest != null) query = query.ApplySort(sortRequest, CustomSortFields);
+        if (sortRequest != null)
+            query = query.ApplySort(sortRequest, CustomSortFields);
         return query;
     }
 }

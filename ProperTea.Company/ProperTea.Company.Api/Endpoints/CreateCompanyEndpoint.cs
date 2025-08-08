@@ -7,7 +7,8 @@ public static class CreateCompanyEndpoint
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("/company",
+        endpoints.MapPost(
+            "/company",
             async (CreateCompanyCommand command, ICommandHandler<CreateCompanyCommand, Guid> handler) =>
             {
                 var result = await handler.HandleAsync(command);
