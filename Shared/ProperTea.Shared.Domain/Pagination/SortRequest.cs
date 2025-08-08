@@ -4,19 +4,25 @@ public record SortField(string PropertyName, bool IsDescending = false);
 
 public record SortRequest
 {
-    public IReadOnlyList<SortField> Fields { get; }
-
     private SortRequest(IEnumerable<SortField> fields)
     {
         Fields = fields.ToList();
     }
 
+    public IReadOnlyList<SortField> Fields { get; }
+
     public static SortRequest By(string propertyName, bool isDescending = false)
-        => new([new SortField(propertyName, isDescending)]);
+    {
+        return new SortRequest([new SortField(propertyName, isDescending)]);
+    }
 
     public static SortRequest By(params SortField[] fields)
-        => new(fields);
+    {
+        return new SortRequest(fields);
+    }
 
     public static SortRequest By(IEnumerable<SortField> fields)
-        => new(fields);
+    {
+        return new SortRequest(fields);
+    }
 }

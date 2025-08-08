@@ -3,7 +3,7 @@ using ProperTea.Company.Domain.Company.ValueObjects;
 
 namespace ProperTea.Company.Domain.Company;
 
-public class Company : AggregateRootBase, ISystemOwnerEntity
+public class Company : AggregateRootBase, ISystemOwnerScoped
 {
     public const int MaxNameLength = 200;
     public const int MinNameLength = 1;
@@ -21,9 +21,9 @@ public class Company : AggregateRootBase, ISystemOwnerEntity
         SystemOwnerId = systemOwnerId;
     }
 
-    public string Name
+    public CompanyName Name
     {
-        get => _name.Value;
+        get => _name;
         private set => _name = CompanyName.Create(value);
     }
 

@@ -2,14 +2,6 @@ namespace ProperTea.Shared.Domain.Pagination;
 
 public class PagedResult<T>
 {
-    public IReadOnlyList<T> Items { get; }
-    public int TotalCount { get; }
-    public int PageSize { get; }
-    public int CurrentPage { get; }
-    public int TotalPages { get; }
-    public bool HasNextPage { get; }
-    public bool HasPreviousPage { get; }
-
     public PagedResult(IReadOnlyList<T> items, int totalCount, PageRequest pageRequest)
     {
         Items = items;
@@ -20,4 +12,12 @@ public class PagedResult<T>
         HasNextPage = CurrentPage < TotalPages;
         HasPreviousPage = CurrentPage > 1;
     }
+
+    public IReadOnlyList<T> Items { get; }
+    public int TotalCount { get; }
+    public int PageSize { get; }
+    public int CurrentPage { get; }
+    public int TotalPages { get; }
+    public bool HasNextPage { get; }
+    public bool HasPreviousPage { get; }
 }

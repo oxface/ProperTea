@@ -10,7 +10,6 @@ using ProperTea.Shared.Application.Commands;
 using ProperTea.Shared.Application.Queries;
 using ProperTea.Shared.Domain;
 using ProperTea.Shared.Domain.DomainEvents;
-using ProperTea.Shared.Infrastructure.Data;
 using ProperTea.Shared.Infrastructure.Data.Ef;
 using ProperTea.Shared.Infrastructure.Events;
 

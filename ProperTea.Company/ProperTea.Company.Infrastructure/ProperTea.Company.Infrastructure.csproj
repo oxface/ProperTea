@@ -10,7 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="../ProperTea.Company.Application/ProperTea.Company.Application.csproj"/>
         <ProjectReference Include="../ProperTea.Company.Domain/ProperTea.Company.Domain.csproj"/>
-        <ProjectReference Include="..\..\Shared\ProperTea.Shared.Infrastructure.Data.Ef\ProperTea.Shared.Infrastructure.Data.Ef.csproj" />
+        <ProjectReference Include="..\..\Shared\ProperTea.Shared.Infrastructure.Data.Ef\ProperTea.Shared.Infrastructure.Data.Ef.csproj"/>
         <ProjectReference Include="..\..\Shared\ProperTea.Shared.Infrastructure\ProperTea.Shared.Infrastructure.csproj"/>
     </ItemGroup>
 

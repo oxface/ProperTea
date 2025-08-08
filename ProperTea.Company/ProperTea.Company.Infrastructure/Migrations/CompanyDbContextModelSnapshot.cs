@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 using ProperTea.Company.Infrastructure.Company.Data;
 
 #nullable disable
@@ -31,9 +30,19 @@ namespace ProperTea.Company.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("SystemOwnerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name", "SystemOwnerId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Company_Name");
+
+                    b.HasIndex(new[] { "SystemOwnerId" }, "IX_Company_SystemOwnerId");
 
                     b.ToTable("Companies");
                 });

@@ -11,6 +11,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\ProperTea.Shared.Application\ProperTea.Shared.Application.csproj"/>
         <ProjectReference Include="..\ProperTea.Shared.Domain\ProperTea.Shared.Domain.csproj"/>
         <ProjectReference Include="..\ProperTea.Shared.Infrastructure\ProperTea.Shared.Infrastructure.csproj"/>

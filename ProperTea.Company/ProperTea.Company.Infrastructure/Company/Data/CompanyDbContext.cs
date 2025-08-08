@@ -1,8 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 
-using ProperTea.Company.Infrastructure.Company.ValueConverters;
-using ProperTea.Shared.Domain;
-
 namespace ProperTea.Company.Infrastructure.Company.Data;
 
 public class CompanyDbContext(DbContextOptions<CompanyDbContext> options) : DbContext(options)
@@ -17,22 +14,6 @@ public class CompanyDbContext(DbContextOptions<CompanyDbContext> options) : DbCo
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Domain.Company.Company>(builder =>
-        {
-            builder.Property(c => c.Name)
-                .HasConversion(new CompanyNameConverter())
-                .IsRequired()
-                .HasMaxLength(200);
-
-            builder.HasIndex(nameof(Domain.Company.Company.Name),
-                    nameof(Domain.Company.Company.SystemOwnerId))
-                .IsUnique()
-                .HasDatabaseName("IX_Company_Name");
-        });
-
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            if (typeof(ISystemOwnerEntity).IsAssignableFrom(entityType.ClrType))
-                modelBuilder.Entity(entityType.ClrType)
-                    .HasIndex(nameof(ISystemOwnerEntity.SystemOwnerId));
+        modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
     }
 }

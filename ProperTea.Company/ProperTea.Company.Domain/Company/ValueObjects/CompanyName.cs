@@ -16,13 +16,12 @@ public record CompanyName
         if (string.IsNullOrWhiteSpace(value))
             throw new DomainException("Company.NameRequired");
 
-        if (value.Length > Company.MaxNameLength)
-            throw new DomainException("Company.NameTooLong");
-
-        if (value.Length < Company.MinNameLength)
-            throw new DomainException("Company.NameTooShort");
-
-        return new CompanyName(value);
+        return value.Length switch
+        {
+            > Company.MaxNameLength => throw new DomainException("Company.NameTooLong"),
+            < Company.MinNameLength => throw new DomainException("Company.NameTooShort"),
+            _ => new CompanyName(value)
+        };
     }
 
     public static implicit operator string(CompanyName name)

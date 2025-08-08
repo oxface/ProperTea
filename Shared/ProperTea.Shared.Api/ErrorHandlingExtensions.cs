@@ -1,6 +1,8 @@
 using System.Diagnostics;
 
-namespace ProperTea.Company.Api.Setup;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace ProperTea.Shared.Api;
 
 public static class ErrorHandlingExtensions
 {

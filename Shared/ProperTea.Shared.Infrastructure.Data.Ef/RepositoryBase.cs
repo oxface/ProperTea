@@ -10,6 +10,10 @@ public abstract class RepositoryBase<T, TFilter>(DbContext context) : IRepositor
 {
     protected virtual IQueryable<T> BaseQuery => IncludeRelatedData(context.Set<T>());
 
+    protected virtual IAggregateConfiguration<T>? AggregateConfiguration => null;
+
+    protected virtual Dictionary<string, Func<IQueryable<T>, IQueryable<T>>> CustomSortFields { get; } = new();
+
     public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         return await BaseQuery.SingleOrDefaultAsync(e => e.Id == id, ct);
@@ -44,22 +48,21 @@ public abstract class RepositoryBase<T, TFilter>(DbContext context) : IRepositor
         return await query.ToListAsync(ct);
     }
 
-    protected virtual IQueryable<T> IncludeRelatedData(IQueryable<T> query) => query;
+    protected virtual IQueryable<T> IncludeRelatedData(IQueryable<T> query)
+    {
+        AggregateConfiguration?.ConfigureIncludes(query);
+        return query;
+    }
 
     protected abstract IQueryable<T> ApplyFilter(IQueryable<T> query, TFilter filter);
-    
-    protected virtual Dictionary<string, Func<IQueryable<T>, IQueryable<T>>> CustomSortFields { get; } = new();
-    
+
     private IQueryable<T> BuildQuery(
         TFilter filter,
         SortRequest? sortRequest = null)
     {
         var query = BaseQuery;
         query = ApplyFilter(query, filter);
-        if (sortRequest != null)
-        {
-            query = query.ApplySort(sortRequest, CustomSortFields);
-        }
+        if (sortRequest != null) query = query.ApplySort(sortRequest, CustomSortFields);
         return query;
     }
 }

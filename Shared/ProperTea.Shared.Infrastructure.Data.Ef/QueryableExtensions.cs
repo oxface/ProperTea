@@ -14,7 +14,7 @@ public static class QueryableExtensions
         CancellationToken ct = default)
     {
         var totalCount = await query.CountAsync(ct);
-        
+
         var items = await query
             .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
             .Take(pageRequest.PageSize)
@@ -22,7 +22,7 @@ public static class QueryableExtensions
 
         return new PagedResult<T>(items, totalCount, pageRequest);
     }
-    
+
     public static IQueryable<T> ApplySort<T>(
         this IQueryable<T> query,
         SortRequest sort,
@@ -32,22 +32,14 @@ public static class QueryableExtensions
             return query;
 
         for (var i = 0; i < sort.Fields.Count; i++)
-        {
-            if (customSortFields != null && customSortFields.TryGetValue(sort.Fields[i].PropertyName, out var value))
-            {
-                query = value(query);
-            }
-            else
-            {
-                query = ApplySortField(query, sort.Fields[i], i == 0);
-            }
-        }
-        
+            if (customSortFields != null && customSortFields.TryGetValue(sort.Fields[i].PropertyName, out var value)) query = value(query);
+            else query = ApplySortField(query, sort.Fields[i], i == 0);
+
         return query;
     }
 
     private static IQueryable<T> ApplySortField<T>(
-        IQueryable<T> query, 
+        IQueryable<T> query,
         SortField field,
         bool isFirstField)
     {
@@ -55,9 +47,11 @@ public static class QueryableExtensions
         var property = Expression.Property(parameter, field.PropertyName);
         var lambda = Expression.Lambda(property, parameter);
 
-        var methodName = field.IsDescending 
+        var methodName = field.IsDescending
             ? isFirstField ? "OrderByDescending" : "ThenByDescending"
-            : isFirstField ? "OrderBy" : "ThenBy";
+            : isFirstField
+                ? "OrderBy"
+                : "ThenBy";
 
         var resultExp = Expression.Call(
             typeof(Queryable),

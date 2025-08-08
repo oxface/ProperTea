@@ -1,6 +1,6 @@
 namespace ProperTea.Shared.Domain;
 
-public interface ISystemOwnerEntity
+public interface ISystemOwnerScoped
 {
     Guid SystemOwnerId { get; }
 }
