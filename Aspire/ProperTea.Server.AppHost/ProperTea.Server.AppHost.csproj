@@ -20,8 +20,8 @@
     <ItemGroup>
         <ProjectReference Include="..\..\ProperTea.Company\ProperTea.Company.Api\ProperTea.Company.Api.csproj"/>
         <ProjectReference Include="..\..\ProperTea.Company\ProperTea.Company.MigrationService\ProperTea.Company.MigrationService.csproj"/>
-        <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemOwner.Api\ProperTea.SystemOwner.Api.csproj" />
-        <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemOwner.MigrationService\ProperTea.SystemOwner.MigrationService.csproj" />
+        <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemOwner.Api\ProperTea.SystemOwner.Api.csproj"/>
+        <ProjectReference Include="..\..\ProperTea.SystemOwner\ProperTea.SystemOwner.MigrationService\ProperTea.SystemOwner.MigrationService.csproj"/>
     </ItemGroup>
 
 </Project>

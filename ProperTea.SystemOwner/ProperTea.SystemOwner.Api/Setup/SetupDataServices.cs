@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-using ProperTea.SystemOwner.Infrastructure.SystemOwner.Data;
+using ProperTea.SystemOwner.Infrastructure.Data;
 
 namespace ProperTea.SystemOwner.Api.Setup;
 

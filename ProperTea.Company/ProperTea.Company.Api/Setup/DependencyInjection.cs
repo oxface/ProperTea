@@ -1,10 +1,10 @@
 using FluentValidation;
 
-using ProperTea.Company.Application.Company.Commands;
-using ProperTea.Company.Application.Company.DomainEventHandlers;
-using ProperTea.Company.Application.Company.Queries;
-using ProperTea.Company.Domain.Company;
-using ProperTea.Company.Infrastructure.Company.Data;
+using ProperTea.Company.Application.Commands;
+using ProperTea.Company.Application.DomainEventHandlers;
+using ProperTea.Company.Application.Queries;
+using ProperTea.Company.Domain;
+using ProperTea.Company.Infrastructure.Data;
 using ProperTea.Shared.Application;
 using ProperTea.Shared.Application.Commands;
 using ProperTea.Shared.Application.Queries;

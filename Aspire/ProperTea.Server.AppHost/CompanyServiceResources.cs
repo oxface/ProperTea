@@ -9,7 +9,7 @@ namespace ProperTea.Server.AppHost;
 public static class CompanyServiceResources
 {
     public static IResourceBuilder<ProjectResource> RegisterCompanyServiceResources(
-        this IDistributedApplicationBuilder builder, 
+        this IDistributedApplicationBuilder builder,
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder,
         IResourceBuilder<ProjectResource> systemOwnerApiBuilder)
     {

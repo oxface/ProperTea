@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProperTea.SystemOwner.Infrastructure.SystemOwner.Data;
+
+using ProperTea.SystemOwner.Infrastructure.Data;
 
 #nullable disable
 

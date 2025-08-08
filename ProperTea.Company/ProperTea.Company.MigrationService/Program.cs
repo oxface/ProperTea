@@ -1,4 +1,4 @@
-using ProperTea.Company.Infrastructure.Company.Data;
+using ProperTea.Company.Infrastructure.Data;
 using ProperTea.Company.MigrationService;
 using ProperTea.Shared.ServiceDefaults;
 

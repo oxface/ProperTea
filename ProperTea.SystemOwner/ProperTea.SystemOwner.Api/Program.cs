@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
 using ProperTea.Shared.ServiceDefaults;
+using ProperTea.SystemOwner.Api.Endpoints;
 using ProperTea.SystemOwner.Api.Setup;
-using ProperTea.SystemOwner.Api.SystemOwner.Endpoints;
 
 using Scalar.AspNetCore;
 

@@ -29,8 +29,4 @@
         <ProjectReference Include="..\ProperTea.Company.MigrationService\ProperTea.Company.MigrationService.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Company\"/>
-    </ItemGroup>
-
 </Project>

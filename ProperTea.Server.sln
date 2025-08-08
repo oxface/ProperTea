@@ -50,6 +50,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.Infra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.MigrationService", "ProperTea.SystemOwner\ProperTea.SystemOwner.MigrationService\ProperTea.SystemOwner.MigrationService.csproj", "{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Domain", "ProperTea.SystemUser\ProperTea.SystemUser.Domain\ProperTea.SystemUser.Domain.csproj", "{BE3DA515-04BA-4773-A56C-308643E490EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Application", "ProperTea.SystemUser\ProperTea.SystemUser.Application\ProperTea.SystemUser.Application.csproj", "{F4999175-559C-4A54-9670-34F9EAEAB5E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Infrastructure", "ProperTea.SystemUser\ProperTea.SystemUser.Infrastructure\ProperTea.SystemUser.Infrastructure.csproj", "{90705329-1432-4691-BE41-24C33CDE6A2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +81,9 @@ Global
 		{0246FB77-3DCF-4BD6-8881-08CEFAD713CA} = {1F373773-B0A7-48C9-A8AB-C2EF7A1C6C7C}
 		{7B27ED22-7A69-45E8-9999-6D1A02AA24ED} = {1F373773-B0A7-48C9-A8AB-C2EF7A1C6C7C}
 		{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309} = {1F373773-B0A7-48C9-A8AB-C2EF7A1C6C7C}
+		{BE3DA515-04BA-4773-A56C-308643E490EE} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
+		{F4999175-559C-4A54-9670-34F9EAEAB5E9} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
+		{90705329-1432-4691-BE41-24C33CDE6A2F} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2813E7DA-A22C-43AE-B26A-1E6C638D8940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -153,5 +162,17 @@ Global
 		{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3DA515-04BA-4773-A56C-308643E490EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3DA515-04BA-4773-A56C-308643E490EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3DA515-04BA-4773-A56C-308643E490EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3DA515-04BA-4773-A56C-308643E490EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4999175-559C-4A54-9670-34F9EAEAB5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4999175-559C-4A54-9670-34F9EAEAB5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4999175-559C-4A54-9670-34F9EAEAB5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4999175-559C-4A54-9670-34F9EAEAB5E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90705329-1432-4691-BE41-24C33CDE6A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90705329-1432-4691-BE41-24C33CDE6A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90705329-1432-4691-BE41-24C33CDE6A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90705329-1432-4691-BE41-24C33CDE6A2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

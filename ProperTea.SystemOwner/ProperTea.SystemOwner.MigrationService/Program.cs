@@ -1,5 +1,5 @@
 using ProperTea.Shared.ServiceDefaults;
-using ProperTea.SystemOwner.Infrastructure.SystemOwner.Data;
+using ProperTea.SystemOwner.Infrastructure.Data;
 using ProperTea.SystemOwner.MigrationService;
 
 var builder = Host.CreateApplicationBuilder(args);

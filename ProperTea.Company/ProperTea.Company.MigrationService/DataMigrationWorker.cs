@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 using Microsoft.EntityFrameworkCore;
 
-using ProperTea.Company.Infrastructure.Company.Data;
+using ProperTea.Company.Infrastructure.Data;
 
 namespace ProperTea.Company.MigrationService;
 

@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared\ProperTea.Shared.ServiceDefaults\ProperTea.Shared.ServiceDefaults.csproj" />
-      <ProjectReference Include="..\ProperTea.SystemOwner.Infrastructure\ProperTea.SystemOwner.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\Shared\ProperTea.Shared.ServiceDefaults\ProperTea.Shared.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\ProperTea.SystemOwner.Infrastructure\ProperTea.SystemOwner.Infrastructure.csproj"/>
     </ItemGroup>
 </Project>

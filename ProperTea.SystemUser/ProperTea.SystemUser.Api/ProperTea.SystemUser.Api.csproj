@@ -7,7 +7,25 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dapr.AspNetCore"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault"/>
+        <PackageReference Include="Scalar.AspNetCore"/>
+        <PackageReference Include="Scrutor"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Shared\ProperTea.Shared.Api\ProperTea.Shared.Api.csproj"/>
+        <ProjectReference Include="..\..\Shared\ProperTea.Shared.ServiceDefaults\ProperTea.Shared.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\ProperTea.SystemUser.Application\ProperTea.SystemUser.Application.csproj"/>
+        <ProjectReference Include="..\ProperTea.SystemUser.Domain\ProperTea.SystemUser.Domain.csproj"/>
+        <ProjectReference Include="..\ProperTea.SystemUser.Infrastructure\ProperTea.SystemUser.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

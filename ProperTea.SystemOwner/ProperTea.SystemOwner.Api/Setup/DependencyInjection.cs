@@ -7,11 +7,11 @@ using ProperTea.Shared.Domain;
 using ProperTea.Shared.Domain.DomainEvents;
 using ProperTea.Shared.Infrastructure.Data.Ef;
 using ProperTea.Shared.Infrastructure.Events;
-using ProperTea.SystemOwner.Application.SystemOwner.Commands;
-using ProperTea.SystemOwner.Application.SystemOwner.DomainEventHandlers;
-using ProperTea.SystemOwner.Application.SystemOwner.Queries;
-using ProperTea.SystemOwner.Domain.SystemOwner;
-using ProperTea.SystemOwner.Infrastructure.SystemOwner.Data;
+using ProperTea.SystemOwner.Application.Commands;
+using ProperTea.SystemOwner.Application.DomainEventHandlers;
+using ProperTea.SystemOwner.Application.Queries;
+using ProperTea.SystemOwner.Domain;
+using ProperTea.SystemOwner.Infrastructure.Data;
 
 namespace ProperTea.SystemOwner.Api.Setup;
 

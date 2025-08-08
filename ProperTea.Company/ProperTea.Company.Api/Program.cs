@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-using ProperTea.Company.Api.Company.Endpoints;
+using ProperTea.Company.Api.Endpoints;
 using ProperTea.Company.Api.Setup;
 using ProperTea.Shared.ServiceDefaults;
 
