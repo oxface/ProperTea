@@ -20,9 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Shared.ServiceDef
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Company.MigrationService", "ProperTea.Company\ProperTea.Company.MigrationService\ProperTea.Company.MigrationService.csproj", "{C5DAC26C-19D9-4498-B208-CE7C605B93A7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SystemOwner", "SystemOwner", "{1F373773-B0A7-48C9-A8AB-C2EF7A1C6C7C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organization", "Organization", "{1F373773-B0A7-48C9-A8AB-C2EF7A1C6C7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.Api", "ProperTea.SystemOwner\ProperTea.SystemOwner.Api\ProperTea.SystemOwner.Api.csproj", "{FD6C0ECF-5AB9-4B4A-96C7-41F73C6D5BC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Organization.Api", "ProperTea.Organization\ProperTea.Organization.Api\ProperTea.Organization.Api.csproj", "{FD6C0ECF-5AB9-4B4A-96C7-41F73C6D5BC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{2BA67E17-BC6D-48B0-B398-1CFE23B76116}"
 EndProject
@@ -42,13 +42,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Shared.Api", "Sha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Shared.Infrastructure.Data.Ef", "Shared\ProperTea.Shared.Infrastructure.Data.Ef\ProperTea.Shared.Infrastructure.Data.Ef.csproj", "{70093C65-FD7A-4AB4-B763-894B6D26B6E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.Domain", "ProperTea.SystemOwner\ProperTea.SystemOwner.Domain\ProperTea.SystemOwner.Domain.csproj", "{266A0002-B7D3-4CF1-AE87-673DE740C6EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Organization.Domain", "ProperTea.Organization\ProperTea.Organization.Domain\ProperTea.Organization.Domain.csproj", "{266A0002-B7D3-4CF1-AE87-673DE740C6EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.Application", "ProperTea.SystemOwner\ProperTea.SystemOwner.Application\ProperTea.SystemOwner.Application.csproj", "{0246FB77-3DCF-4BD6-8881-08CEFAD713CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Organization.Application", "ProperTea.Organization\ProperTea.Organization.Application\ProperTea.Organization.Application.csproj", "{0246FB77-3DCF-4BD6-8881-08CEFAD713CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.Infrastructure", "ProperTea.SystemOwner\ProperTea.SystemOwner.Infrastructure\ProperTea.SystemOwner.Infrastructure.csproj", "{7B27ED22-7A69-45E8-9999-6D1A02AA24ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Organization.Infrastructure", "ProperTea.Organization\ProperTea.Organization.Infrastructure\ProperTea.Organization.Infrastructure.csproj", "{7B27ED22-7A69-45E8-9999-6D1A02AA24ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemOwner.MigrationService", "ProperTea.SystemOwner\ProperTea.SystemOwner.MigrationService\ProperTea.SystemOwner.MigrationService.csproj", "{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Organization.MigrationService", "ProperTea.Organization\ProperTea.Organization.MigrationService\ProperTea.Organization.MigrationService.csproj", "{DD2B1C10-6F89-4F7F-A28D-FFA6EF8B9309}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Domain", "ProperTea.SystemUser\ProperTea.SystemUser.Domain\ProperTea.SystemUser.Domain.csproj", "{BE3DA515-04BA-4773-A56C-308643E490EE}"
 EndProject
@@ -56,7 +56,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Infrastructure", "ProperTea.SystemUser\ProperTea.SystemUser.Infrastructure\ProperTea.SystemUser.Infrastructure.csproj", "{90705329-1432-4691-BE41-24C33CDE6A2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.MigrationService", "ProperTea.SystemOwner\ProperTea.SystemUser.MigrationService\ProperTea.SystemUser.MigrationService.csproj", "{E2CDB905-DFD6-431F-9484-D4A57D1974CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.MigrationService", "ProperTea.SystemUser\ProperTea.SystemUser.MigrationService\ProperTea.SystemUser.MigrationService.csproj", "{E2CDB905-DFD6-431F-9484-D4A57D1974CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

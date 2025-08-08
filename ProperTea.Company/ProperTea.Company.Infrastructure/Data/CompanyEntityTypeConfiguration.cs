@@ -16,10 +16,10 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Co
 
         builder.HasIndex(
                 nameof(Domain.Company.Name),
-                nameof(Domain.Company.SystemOwnerId))
+                nameof(Domain.Company.OrganizationId))
             .IsUnique()
             .HasDatabaseName("IX_Company_Name");
 
-        builder.HasIndex(c => c.SystemOwnerId, "IX_Company_SystemOwnerId");
+        builder.HasIndex(c => c.OrganizationId, "IX_Company_OrganizationId");
     }
 }

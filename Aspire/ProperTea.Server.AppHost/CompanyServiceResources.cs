@@ -11,7 +11,7 @@ public static class CompanyServiceResources
     public static IResourceBuilder<ProjectResource> RegisterCompanyServiceResources(
         this IDistributedApplicationBuilder builder,
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder,
-        IResourceBuilder<ProjectResource> systemOwnerApiBuilder)
+        IResourceBuilder<ProjectResource> organizationApiBuilder)
     {
         // Ports 5200-5299.
         // 10 ports per service.
@@ -27,14 +27,14 @@ public static class CompanyServiceResources
             AppPort = 5200,
             DaprHttpPort = 5201,
             DaprGrpcPort = 5202,
-            MetricsPort = 5003
+            MetricsPort = 5203
         };
         var api = builder
             .AddProject<ProperTea_Company_Api>("company-api")
             .WithReference(db)
             .WaitFor(db)
-            .WithReference(systemOwnerApiBuilder)
-            .WaitFor(systemOwnerApiBuilder)
+            .WithReference(organizationApiBuilder)
+            .WaitFor(organizationApiBuilder)
             .WithReference(migrations)
             .WaitForCompletion(migrations)
             .WithDaprSidecar(apiSidecar)

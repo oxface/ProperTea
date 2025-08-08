@@ -1,10 +1,5 @@
-using ProperTea.Shared.Domain.DomainEvents;
-
 namespace ProperTea.SystemUser.Domain.DomainEvents;
 
-public class SystemUserCreatedDomainEvent(Guid systemUserId, string name) : IDomainEvent
+public record SystemUserCreatedDomainEvent(Guid Id, string Name) : DomainEventBase
 {
-    public Guid SystemUserId { get; } = systemUserId;
-    public string Name { get; } = name;
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
 }

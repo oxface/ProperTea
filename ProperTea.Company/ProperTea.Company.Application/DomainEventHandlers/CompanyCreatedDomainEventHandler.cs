@@ -10,6 +10,6 @@ public class CompanyCreatedDomainEventHandler(ICompanyDomainService companyDomai
     public async Task HandleAsync(CompanyCreatedDomainEvent domainEvent, CancellationToken ct = default)
     {
         // TODO: integration event.
-        await companyDomainService.ChangeCompanyNameAsync(domainEvent.CompanyId, domainEvent.Name + "1", ct);
+        await companyDomainService.ChangeCompanyNameAsync(domainEvent.Id, domainEvent.Name + "1", ct);
     }
 }

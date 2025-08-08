@@ -9,10 +9,10 @@ public class CompanyDomainService(ICompanyRepository repository, IDomainEventDis
 {
     public async Task<Company> CreateCompanyAsync(
         string name,
-        Guid systemOwnerId,
+        Guid organizationId,
         CancellationToken ct = default)
     {
-        var company = Company.Create(name, systemOwnerId);
+        var company = Company.Create(name, organizationId);
         await repository.AddAsync(company, ct);
         return company;
     }

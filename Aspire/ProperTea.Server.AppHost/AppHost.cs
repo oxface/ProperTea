@@ -9,8 +9,8 @@ var azureSql = builder.AddAzureSqlServer("propertea-sql")
         e.WithLifetime(ContainerLifetime.Persistent);
     });
 
-var systemOwnerApi = builder.RegisterSystemOwnerServiceResources(azureSql);
-var systemUserApi = builder.RegisterSystemUserServiceResources(azureSql, systemOwnerApi);
-var companyApi = builder.RegisterCompanyServiceResources(azureSql, systemOwnerApi);
+var organizationApi = builder.RegisterOrganizationServiceResources(azureSql);
+var systemUserApi = builder.RegisterSystemUserServiceResources(azureSql, organizationApi);
+var companyApi = builder.RegisterCompanyServiceResources(azureSql, organizationApi);
 
 builder.Build().Run();

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 using ProperTea.Company.Infrastructure.Data;
 
 #nullable disable
@@ -23,7 +22,7 @@ namespace ProperTea.Company.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProperTea.Company.Domain.Company.Company", b =>
+            modelBuilder.Entity("ProperTea.Company.Domain.Company", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,16 +33,16 @@ namespace ProperTea.Company.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<Guid>("SystemOwnerId")
+                    b.Property<Guid>("OrganizationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "SystemOwnerId")
+                    b.HasIndex("Name", "OrganizationId")
                         .IsUnique()
                         .HasDatabaseName("IX_Company_Name");
 
-                    b.HasIndex(new[] { "SystemOwnerId" }, "IX_Company_SystemOwnerId");
+                    b.HasIndex(new[] { "OrganizationId" }, "IX_Company_OrganizationId");
 
                     b.ToTable("Companies");
                 });

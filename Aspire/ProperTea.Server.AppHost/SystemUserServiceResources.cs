@@ -11,7 +11,7 @@ public static class SystemUserServiceResources
     public static IResourceBuilder<ProjectResource> RegisterSystemUserServiceResources(
         this IDistributedApplicationBuilder builder,
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder,
-        IResourceBuilder<ProjectResource> systemOwnerApiBuilder)
+        IResourceBuilder<ProjectResource> organizationApiBuilder)
     {
         // Ports 5100-5199.
         // 10 ports per service.
@@ -33,8 +33,8 @@ public static class SystemUserServiceResources
             .AddProject<ProperTea_SystemUser_Api>("systemuser-api")
             .WithReference(db)
             .WaitFor(db)
-            .WithReference(systemOwnerApiBuilder)
-            .WaitFor(systemOwnerApiBuilder)
+            .WithReference(organizationApiBuilder)
+            .WaitFor(organizationApiBuilder)
             .WithReference(migrations)
             .WaitForCompletion(migrations)
             .WithDaprSidecar(apiSidecar)

@@ -1,8 +1,5 @@
-using ProperTea.Shared.Domain.DomainEvents;
-
 namespace ProperTea.SystemUser.Domain.DomainEvents;
 
-public class SystemUserDeletedDomainEvent(Guid SystemUserId) : IDomainEvent
+public record SystemUserDeletedDomainEvent(Guid Id) : DomainEventBase
 {
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
 }
