@@ -32,8 +32,10 @@ public static class QueryableExtensions
             return query;
 
         for (var i = 0; i < sort.Fields.Count; i++)
-            if (customSortFields != null && customSortFields.TryGetValue(sort.Fields[i].PropertyName, out var value)) query = value(query);
-            else query = ApplySortField(query, sort.Fields[i], i == 0);
+            if (customSortFields != null && customSortFields.TryGetValue(sort.Fields[i].PropertyName, out var value))
+                query = value(query);
+            else
+                query = ApplySortField(query, sort.Fields[i], i == 0);
 
         return query;
     }

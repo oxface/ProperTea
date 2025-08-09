@@ -30,7 +30,8 @@ public class UnitOfWork(DbContext dbContext, IDomainEventDispatcher dispatcher)
 
                 await dispatcher.DispatchAllAsync(cancellationToken);
 
-                if (dbContext.ChangeTracker.HasChanges()) await dbContext.SaveChangesAsync(cancellationToken);
+                if (dbContext.ChangeTracker.HasChanges())
+                    await dbContext.SaveChangesAsync(cancellationToken);
 
                 hasMoreEvents = CollectDomainEvents().Count != 0;
                 currentIteration++;

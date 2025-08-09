@@ -13,7 +13,8 @@ public class ValidationCommandHandlerDecorator<TCommand, TResult>(
         if (validator != null)
         {
             var validationResult = await validator.ValidateAsync(command);
-            if (!validationResult.IsValid) throw new ValidationException(validationResult.Errors);
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
         }
 
         return await decorated.HandleAsync(command);

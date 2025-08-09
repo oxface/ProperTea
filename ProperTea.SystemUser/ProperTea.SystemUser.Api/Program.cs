@@ -37,11 +37,13 @@ app.UseCloudEvents();
 app.MapSubscribeHandler();
 
 app.MapOpenApi();
-if (app.Environment.IsDevelopment()) app.MapScalarApiReference();
+if (app.Environment.IsDevelopment())
+    app.MapScalarApiReference();
 
 app.UseExceptionHandler();
 app.UseStatusCodePages();
-if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
 
