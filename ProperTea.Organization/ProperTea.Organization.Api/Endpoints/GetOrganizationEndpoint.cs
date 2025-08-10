@@ -11,7 +11,7 @@ public static class GetOrganizationEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet(
-            "/system-owner",
+            "/organization",
             async (HttpRequest request, IQueryHandler<GetOrganizationByFilterQuery, PagedResult<OrganizationModel>> handler) =>
             {
                 var filter = new OrganizationFilter

@@ -9,7 +9,7 @@ public static class GetOrganizationByIdEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet(
-            "/system-owner/{id:guid}",
+            "/organization/{id:guid}",
             async (Guid id, IQueryHandler<GetOrganizationByIdQuery, OrganizationModel> handler) =>
             {
                 var result = await handler.HandleAsync(

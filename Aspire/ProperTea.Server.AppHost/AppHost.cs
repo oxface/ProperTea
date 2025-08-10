@@ -13,4 +13,14 @@ var organizationApi = builder.RegisterOrganizationServiceResources(azureSql);
 var systemUserApi = builder.RegisterSystemUserServiceResources(azureSql, organizationApi);
 var companyApi = builder.RegisterCompanyServiceResources(azureSql, organizationApi);
 
+var gateway = builder.AddProject<Projects.ProperTea_LandlordPortal_Gateway>("landlord-portal-gateway")
+    .WithReference(organizationApi)
+    .WaitFor(organizationApi)
+    .WithReference(systemUserApi)
+    .WaitFor(systemUserApi)
+    .WithReference(companyApi)
+    .WaitFor(companyApi)
+    .WithExternalHttpEndpoints()
+    .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development");
+
 builder.Build().Run();

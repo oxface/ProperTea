@@ -8,7 +8,7 @@ public static class DeleteSystemUserEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapDelete(
-            "/system-owner/{id:guid}",
+            "/system-user/{id:guid}",
             async (Guid id, ICommandHandler<DeleteSystemUserCommand> handler) =>
             {
                 await handler.HandleAsync(

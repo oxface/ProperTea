@@ -8,7 +8,7 @@ public static class CreateOrganizationEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapPost(
-            "/system-owner",
+            "/organization",
             async (CreateOrganizationCommand command, ICommandHandler<CreateOrganizationCommand, Guid> handler) =>
             {
                 var result = await handler.HandleAsync(command);

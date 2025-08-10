@@ -8,7 +8,7 @@ public static class DeleteOrganizationEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapDelete(
-            "/system-owner/{id:guid}",
+            "/organization/{id:guid}",
             async (Guid id, ICommandHandler<DeleteOrganizationCommand> handler) =>
             {
                 await handler.HandleAsync(

@@ -9,7 +9,7 @@ public static class GetSystemUserByIdEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet(
-            "/system-owner/{id:guid}",
+            "/system-user/{id:guid}",
             async (Guid id, IQueryHandler<GetSystemUserByIdQuery, SystemUserModel> handler) =>
             {
                 var result = await handler.HandleAsync(

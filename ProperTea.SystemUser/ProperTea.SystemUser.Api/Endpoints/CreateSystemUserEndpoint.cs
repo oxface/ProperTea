@@ -8,7 +8,7 @@ public static class CreateSystemUserEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapPost(
-            "/system-owner",
+            "/system-user",
             async (CreateSystemUserCommand command, ICommandHandler<CreateSystemUserCommand, Guid> handler) =>
             {
                 var result = await handler.HandleAsync(command);

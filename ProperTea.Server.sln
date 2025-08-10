@@ -58,6 +58,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.SystemUser.MigrationService", "ProperTea.SystemUser\ProperTea.SystemUser.MigrationService\ProperTea.SystemUser.MigrationService.csproj", "{E2CDB905-DFD6-431F-9484-D4A57D1974CC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LandlordPortal", "LandlordPortal", "{2FA2FD60-862C-4B8A-AE30-4161406033B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.LandlordPortal.Gateway", "ProperTea.LandlordPortal\ProperTea.LandlordPortal.Gateway\ProperTea.LandlordPortal.Gateway.csproj", "{712979EA-492B-4B1A-8E69-1B78345AE85B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,7 @@ Global
 		{F4999175-559C-4A54-9670-34F9EAEAB5E9} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 		{90705329-1432-4691-BE41-24C33CDE6A2F} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 		{E2CDB905-DFD6-431F-9484-D4A57D1974CC} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
+		{712979EA-492B-4B1A-8E69-1B78345AE85B} = {2FA2FD60-862C-4B8A-AE30-4161406033B6}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2813E7DA-A22C-43AE-B26A-1E6C638D8940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -181,5 +186,9 @@ Global
 		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2CDB905-DFD6-431F-9484-D4A57D1974CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

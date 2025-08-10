@@ -11,7 +11,7 @@ public static class GetSystemUsersEndpoint
     public static void Map(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet(
-            "/system-owner",
+            "/system-user",
             async (HttpRequest request, IQueryHandler<GetSystemUsersByFilterQuery, PagedResult<SystemUserModel>> handler) =>
             {
                 var filter = new SystemUserFilter
