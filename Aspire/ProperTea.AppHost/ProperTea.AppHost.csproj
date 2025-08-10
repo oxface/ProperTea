@@ -19,8 +19,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Orchestration\ProperTea.Orchestration.Api\ProperTea.Orchestration.Api.csproj" />
         <ProjectReference Include="..\..\ProperTea.Company\ProperTea.Company.Api\ProperTea.Company.Api.csproj"/>
         <ProjectReference Include="..\..\ProperTea.Company\ProperTea.Company.MigrationService\ProperTea.Company.MigrationService.csproj"/>
+        <ProjectReference Include="..\..\ProperTea.Identity\ProperTea.Identity.Api\ProperTea.Identity.Api.csproj" />
+        <ProjectReference Include="..\..\ProperTea.Identity\ProperTea.Identity.MigrationService\ProperTea.Identity.MigrationService.csproj" />
         <ProjectReference Include="..\..\ProperTea.LandlordPortal\ProperTea.LandlordPortal.Gateway\ProperTea.LandlordPortal.Gateway.csproj" />
         <ProjectReference Include="..\..\ProperTea.Organization\ProperTea.Organization.Api\ProperTea.Organization.Api.csproj"/>
         <ProjectReference Include="..\..\ProperTea.Organization\ProperTea.Organization.MigrationService\ProperTea.Organization.MigrationService.csproj"/>

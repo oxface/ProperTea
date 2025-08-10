@@ -12,15 +12,19 @@ var azureSql = builder.AddAzureSqlServer("propertea-sql")
 var organizationApi = builder.RegisterOrganizationServiceResources(azureSql);
 var systemUserApi = builder.RegisterSystemUserServiceResources(azureSql, organizationApi);
 var companyApi = builder.RegisterCompanyServiceResources(azureSql, organizationApi);
+var identityApi = builder.RegisterIdentityServiceResources(azureSql);
 
-var gateway = builder.AddProject<Projects.ProperTea_LandlordPortal_Gateway>("landlord-portal-gateway")
-    .WithReference(organizationApi)
-    .WaitFor(organizationApi)
-    .WithReference(systemUserApi)
-    .WaitFor(systemUserApi)
-    .WithReference(companyApi)
-    .WaitFor(companyApi)
-    .WithExternalHttpEndpoints()
-    .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development");
+var orchestrationApi = builder.RegisterOrchestratorServiceResources(
+[
+    organizationApi, systemUserApi, companyApi
+]);
+var landlordGateway = builder.RegisterLandlordGatewayResources(
+[
+    organizationApi,
+    systemUserApi,
+    companyApi,
+    orchestrationApi
+]);
+
 
 builder.Build().Run();

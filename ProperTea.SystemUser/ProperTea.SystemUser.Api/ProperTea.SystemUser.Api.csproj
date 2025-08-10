@@ -28,4 +28,12 @@
         <ProjectReference Include="..\ProperTea.SystemUser.Infrastructure\ProperTea.SystemUser.Infrastructure.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
+    </ItemGroup>
+
 </Project>

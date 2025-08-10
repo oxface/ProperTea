@@ -62,6 +62,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LandlordPortal", "LandlordP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.LandlordPortal.Gateway", "ProperTea.LandlordPortal\ProperTea.LandlordPortal.Gateway\ProperTea.LandlordPortal.Gateway.csproj", "{712979EA-492B-4B1A-8E69-1B78345AE85B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orchestration", "Orchestration", "{DD8B433E-FC79-44B6-A211-93F1D41751D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Orchestration.Api", "Orchestration\ProperTea.Orchestration.Api\ProperTea.Orchestration.Api.csproj", "{EE5DA63C-7BE1-42B0-999C-6883EFD3528D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Identity.MigrationService", "ProperTea.Identity\ProperTea.Identity.MigrationService\ProperTea.Identity.MigrationService.csproj", "{1952D18A-2174-413B-BB26-54E6B834BBB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +98,8 @@ Global
 		{90705329-1432-4691-BE41-24C33CDE6A2F} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 		{E2CDB905-DFD6-431F-9484-D4A57D1974CC} = {FD5B755B-D4A7-4A13-AE80-7B0E0D073593}
 		{712979EA-492B-4B1A-8E69-1B78345AE85B} = {2FA2FD60-862C-4B8A-AE30-4161406033B6}
+		{EE5DA63C-7BE1-42B0-999C-6883EFD3528D} = {DD8B433E-FC79-44B6-A211-93F1D41751D2}
+		{1952D18A-2174-413B-BB26-54E6B834BBB9} = {2BA67E17-BC6D-48B0-B398-1CFE23B76116}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2813E7DA-A22C-43AE-B26A-1E6C638D8940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -190,5 +198,13 @@ Global
 		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{712979EA-492B-4B1A-8E69-1B78345AE85B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5DA63C-7BE1-42B0-999C-6883EFD3528D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5DA63C-7BE1-42B0-999C-6883EFD3528D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5DA63C-7BE1-42B0-999C-6883EFD3528D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5DA63C-7BE1-42B0-999C-6883EFD3528D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1952D18A-2174-413B-BB26-54E6B834BBB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1952D18A-2174-413B-BB26-54E6B834BBB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1952D18A-2174-413B-BB26-54E6B834BBB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1952D18A-2174-413B-BB26-54E6B834BBB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

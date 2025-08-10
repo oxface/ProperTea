@@ -12,7 +12,7 @@ public static class CreateCompanyEndpoint
             async (CreateCompanyCommand command, ICommandHandler<CreateCompanyCommand, Guid> handler) =>
             {
                 var result = await handler.HandleAsync(command);
-                return Results.Created($"/companies/{result}", result);
+                return Results.Created($"/company/{result}", result);
             });
     }
 }

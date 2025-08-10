@@ -13,24 +13,27 @@ public static class SystemUserServiceResources
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder,
         IResourceBuilder<ProjectResource> organizationApiBuilder)
     {
-        // Ports 5100-5199.
+        // Ports 5050-5099.
         // 10 ports per service.
+        const int apiPort = 5050;
         var db = sqlServerBuilder.AddDatabase("propertea-systemuser-db");
         var migrations = builder.AddProject<ProperTea_SystemUser_MigrationService>(
-                "systemuser-migrations")
+                "propertea-systemuser-migrations")
             .WithReference(db)
             .WaitFor(db);
 
         var apiSidecar = new DaprSidecarOptions
         {
-            AppId = "systemuser-api-sidecar",
-            AppPort = 5100,
-            DaprHttpPort = 5101,
-            DaprGrpcPort = 5102,
-            MetricsPort = 5103
+            AppId = "propertea-systemuser-api",
+            AppPort = apiPort,
+            DaprHttpPort = 5052,
+            DaprGrpcPort = 5053,
+            MetricsPort = 5054
         };
         var api = builder
-            .AddProject<ProperTea_SystemUser_Api>("systemuser-api")
+            .AddProject<ProperTea_SystemUser_Api>("propertea-systemuser-api")
+            .WithHttpEndpoint(port: apiPort)
+            .WithHttpsEndpoint(port: apiPort + 1)
             .WithReference(db)
             .WaitFor(db)
             .WithReference(organizationApiBuilder)

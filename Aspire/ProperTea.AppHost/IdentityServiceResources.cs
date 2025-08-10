@@ -6,37 +6,38 @@ using Projects;
 
 namespace ProperTea.AppHost;
 
-public static class OrganizationServiceResources
+public static class IdentityServiceResources
 {
-    public static IResourceBuilder<ProjectResource> RegisterOrganizationServiceResources(
+    public static IResourceBuilder<ProjectResource> RegisterIdentityServiceResources(
         this IDistributedApplicationBuilder builder,
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder)
     {
-        // Ports 5000-5049.
-        // 10 ports per API.
-        const int apiPort = 5000;
-        var db = sqlServerBuilder.AddDatabase("propertea-organization-db");
-        var migrations = builder.AddProject<ProperTea_Organization_MigrationService>(
-                "propertea-organization-migrations")
+        // Ports 5150-5199.
+        // 10 ports per service.
+        const int apiPort = 5150;
+        var db = sqlServerBuilder.AddDatabase("propertea-identity-db");
+        var migrations = builder.AddProject<ProperTea_Identity_MigrationService>(
+                "propertea-identity-migrations")
             .WithReference(db)
             .WaitFor(db);
 
         var apiSidecar = new DaprSidecarOptions
         {
-            AppId = "propertea-organization-api",
+            AppId = "propertea-identity-api",
             AppPort = apiPort,
-            DaprHttpPort = 5002,
-            DaprGrpcPort = 5003,
-            MetricsPort = 5004
+            DaprHttpPort = 5152,
+            DaprGrpcPort = 5153,
+            MetricsPort = 5154
         };
         var api = builder
-            .AddProject<ProperTea_Organization_Api>("propertea-organization-api")
+            .AddProject<ProperTea_SystemUser_Api>("propertea-identity-api")
             .WithHttpEndpoint(port: apiPort)
             .WithHttpsEndpoint(port: apiPort + 1)
+            .WithExternalHttpEndpoints()
             .WithReference(db)
             .WaitFor(db)
             .WithReference(migrations)
-            .WaitForCompletion(migrations)
+            .WaitFor(migrations)
             .WithDaprSidecar(apiSidecar)
             .WithOtlpExporter()
             .WithHttpHealthCheck("/health")

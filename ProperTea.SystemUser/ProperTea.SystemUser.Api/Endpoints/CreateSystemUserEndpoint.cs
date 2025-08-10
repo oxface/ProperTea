@@ -12,7 +12,7 @@ public static class CreateSystemUserEndpoint
             async (CreateSystemUserCommand command, ICommandHandler<CreateSystemUserCommand, Guid> handler) =>
             {
                 var result = await handler.HandleAsync(command);
-                return Results.Created($"/companies/{result}", result);
+                return Results.Created($"/system-user/{result}", result);
             });
     }
 }
