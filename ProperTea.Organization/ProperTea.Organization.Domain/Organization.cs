@@ -8,8 +8,6 @@ public class Organization : AggregateRootBase
     public const int MaxNameLength = 200;
     public const int MinNameLength = 1;
 
-    private OrganizationName _name = null!;
-
     private Organization()
     {
     }
@@ -17,14 +15,10 @@ public class Organization : AggregateRootBase
     private Organization(Guid id, OrganizationName name)
     {
         Id = id;
-        _name = name;
+        Name = name;
     }
 
-    public OrganizationName Name
-    {
-        get => _name;
-        private set => _name = OrganizationName.Create(value);
-    }
+    public OrganizationName Name { get; private set; } = null!;
 
     public static Organization Create(string name)
     {
@@ -37,10 +31,10 @@ public class Organization : AggregateRootBase
     public void ChangeName(string newName)
     {
         var organizationName = OrganizationName.Create(newName);
-        if (_name == organizationName)
+        if (Name == organizationName)
             return;
 
-        _name = organizationName;
+        Name = organizationName;
         AddDomainEvent(new OrganizationNameChangedDomainEvent(Id, Name));
     }
 

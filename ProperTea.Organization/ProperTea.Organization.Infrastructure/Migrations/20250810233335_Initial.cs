@@ -22,12 +22,6 @@ namespace ProperTea.Organization.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Organizations", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Name",
-                table: "Organizations",
-                column: "Name",
-                unique: true);
         }
 
         /// <inheritdoc />

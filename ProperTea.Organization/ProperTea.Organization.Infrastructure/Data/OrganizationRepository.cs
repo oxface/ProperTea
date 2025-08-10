@@ -16,9 +16,7 @@ public class OrganizationRepository(OrganizationDbContext context)
         OrganizationFilter filter)
     {
         if (!string.IsNullOrEmpty(filter.Name))
-            query = query.Where(i => EF.Functions.Like(
-                EF.Property<string>(i, "Name"),
-                $"%{filter.Name}%"));
+            query = query.Where(i => i.Name.Value.Contains(filter.Name));
 
         return query;
     }
