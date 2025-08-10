@@ -1,5 +1,7 @@
 using CommunityToolkit.Aspire.Hosting.Dapr;
 
+using Projects;
+
 namespace ProperTea.AppHost;
 
 public static class GatewayResources
@@ -20,9 +22,9 @@ public static class GatewayResources
             MetricsPort = 5954
         };
         var gateway = builder
-            .AddProject<Projects.ProperTea_LandlordPortal_Gateway>("propertea-landlord-portal-gateway")
-            .WithHttpEndpoint(port: apiPort)
-            .WithHttpsEndpoint(port: apiPort + 1)
+            .AddProject<ProperTea_LandlordPortal_Gateway>("propertea-landlord-portal-gateway")
+            .WithHttpEndpoint(apiPort)
+            .WithHttpsEndpoint(apiPort + 1)
             .WithExternalHttpEndpoints()
             .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development");
         waitForProjects.ToList().ForEach(p =>

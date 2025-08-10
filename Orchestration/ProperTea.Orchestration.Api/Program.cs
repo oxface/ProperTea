@@ -1,4 +1,3 @@
-using Dapr.Client;
 using Dapr.Workflow;
 
 using ProperTea.Orchestration.Api.Activities;
@@ -27,15 +26,13 @@ var app = builder.Build();
 
 app.MapOpenApi();
 if (app.Environment.IsDevelopment())
-{
     app.MapScalarApiReference();
-}
 
 app.UseHttpsRedirection();
 
 app.MapDefaultEndpoints();
 
-app.MapPost("/register-organization", 
+app.MapPost("/register-organization",
     async (RegisterOrganizationWorkflowInput input, DaprWorkflowClient workflowClient) =>
     {
         var instanceId = await workflowClient.ScheduleNewWorkflowAsync(
@@ -44,11 +41,15 @@ app.MapPost("/register-organization",
         var state = await workflowClient.WaitForWorkflowCompletionAsync(instanceId);
         if (state.RuntimeStatus != WorkflowRuntimeStatus.Completed)
             return Results.BadRequest(state.FailureDetails?.ErrorMessage);
-        
+
         var result = state.ReadOutputAs<RegisterOrganizationWorkflowResult>();
         return !result!.Success
-            ? Results.BadRequest(state.FailureDetails?.ErrorMessage) 
-            : Results.Created($"/organization/{result.OrganizationId}", new { result.OrganizationId, result.AdminUserId });
+            ? Results.BadRequest(state.FailureDetails?.ErrorMessage)
+            : Results.Created($"/organization/{result.OrganizationId}", new
+            {
+                result.OrganizationId,
+                result.AdminUserId
+            });
     });
 
 app.Run();

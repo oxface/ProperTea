@@ -22,20 +22,21 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
         {
             logger.LogError(ex, "Failed to create organization.");
             return new RegisterOrganizationWorkflowResult(
-                false, 
+                false,
                 null,
                 null,
                 "Failed to create organization.");
         }
-        
+
         var organizationId = orgResponse.OrganizationId;
-            
+
         var userRequest = new CreateSystemUserRequest(organizationId, input.AdminEmail, input.AdminDisplayName, "Admin");
         CreateSystemUserResponse userResponse;
         try
-        {   userResponse = await context.CallActivityAsync<CreateSystemUserResponse>(
-            nameof(CreateSystemUserActivity),
-            userRequest);
+        {
+            userResponse = await context.CallActivityAsync<CreateSystemUserResponse>(
+                nameof(CreateSystemUserActivity),
+                userRequest);
         }
         catch (Exception ex)
         {
@@ -49,12 +50,14 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
                 if (!deleteOrgEx.Message.Contains("404"))
                     logger.LogError(deleteOrgEx, "Failed to delete organization during compensation.");
             }
+
             return new RegisterOrganizationWorkflowResult(
-                false, 
+                false,
                 null,
                 null,
                 "Failed to create system user.");
         }
+
         var userId = userResponse.UserId;
         var identityRequest = new CreateUserIdentityRequest(userId, input.AdminEmail, input.AdminPassword);
         try
@@ -74,6 +77,7 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
                 if (!deleteOrgEx.Message.Contains("404"))
                     logger.LogError(deleteOrgEx, "Failed to delete organization during compensation.");
             }
+
             try
             {
                 await context.CallActivityAsync(nameof(DeleteSystemUserActivity), userId);
@@ -83,9 +87,10 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
                 if (!deleteUserEx.Message.Contains("404"))
                     logger.LogError(deleteUserEx, "Failed to delete system user during compensation.");
             }
+
             return new RegisterOrganizationWorkflowResult(false,
                 null,
-                null, 
+                null,
                 "Failed to create user identity.");
         }
 
@@ -94,4 +99,5 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
 }
 
 public record RegisterOrganizationWorkflowInput(string OrganizationName, string AdminEmail, string AdminDisplayName, string AdminPassword);
+
 public record RegisterOrganizationWorkflowResult(bool Success, string? OrganizationId, string? AdminUserId, string? ErrorMessage);

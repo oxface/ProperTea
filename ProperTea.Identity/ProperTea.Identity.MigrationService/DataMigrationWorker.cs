@@ -37,10 +37,7 @@ public class DataMigrationWorker(
     private static async Task RunMigrationAsync(UserIdentityDbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
-        {
-            await dbContext.Database.MigrateAsync(cancellationToken);
-        });
+        await strategy.ExecuteAsync(async () => { await dbContext.Database.MigrateAsync(cancellationToken); });
     }
 
     private static async Task SeedDataAsync(UserIdentityDbContext dbContext, CancellationToken cancellationToken)

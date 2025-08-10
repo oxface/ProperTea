@@ -1,21 +1,19 @@
-using Dapr.Workflow;
-using System.Threading.Tasks;
-using ProperTea.Orchestration.Api.Workflows;
 using Dapr.Client;
+using Dapr.Workflow;
 
-namespace ProperTea.Orchestration.Api.Activities
+namespace ProperTea.Orchestration.Api.Activities;
+
+public class CreateUserIdentityActivity : WorkflowActivity<CreateUserIdentityRequest, CreateUserIdentityResponse>
 {
-    public class CreateUserIdentityActivity : WorkflowActivity<CreateUserIdentityRequest, CreateUserIdentityResponse>
+    public override async Task<CreateUserIdentityResponse> RunAsync(WorkflowActivityContext context, CreateUserIdentityRequest input)
     {
-        public override async Task<CreateUserIdentityResponse> RunAsync(WorkflowActivityContext context, CreateUserIdentityRequest input)
-        {
-            var daprClient = new DaprClientBuilder().Build();
-            var response = await daprClient.InvokeMethodAsync<CreateUserIdentityRequest, CreateUserIdentityResponse>(
-                "propertea-identity-api", "identity", input);
-            return response;
-        }
+        var daprClient = new DaprClientBuilder().Build();
+        var response = await daprClient.InvokeMethodAsync<CreateUserIdentityRequest, CreateUserIdentityResponse>(
+            "propertea-identity-api", "identity", input);
+        return response;
     }
-    
-    public record CreateUserIdentityRequest(string UserId, string Email, string Password);
-    public record CreateUserIdentityResponse(bool Success);
 }
+
+public record CreateUserIdentityRequest(string UserId, string Email, string Password);
+
+public record CreateUserIdentityResponse(bool Success);

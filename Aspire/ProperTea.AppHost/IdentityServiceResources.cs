@@ -31,8 +31,8 @@ public static class IdentityServiceResources
         };
         var api = builder
             .AddProject<ProperTea_SystemUser_Api>("propertea-identity-api")
-            .WithHttpEndpoint(port: apiPort)
-            .WithHttpsEndpoint(port: apiPort + 1)
+            .WithHttpEndpoint(apiPort)
+            .WithHttpsEndpoint(apiPort + 1)
             .WithExternalHttpEndpoints()
             .WithReference(db)
             .WaitFor(db)

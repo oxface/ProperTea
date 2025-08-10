@@ -32,8 +32,8 @@ public static class SystemUserServiceResources
         };
         var api = builder
             .AddProject<ProperTea_SystemUser_Api>("propertea-systemuser-api")
-            .WithHttpEndpoint(port: apiPort)
-            .WithHttpsEndpoint(port: apiPort + 1)
+            .WithHttpEndpoint(apiPort)
+            .WithHttpsEndpoint(apiPort + 1)
             .WithReference(db)
             .WaitFor(db)
             .WithReference(organizationApiBuilder)

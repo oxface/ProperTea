@@ -32,8 +32,8 @@ public static class CompanyServiceResources
         };
         var api = builder
             .AddProject<ProperTea_Company_Api>("propertea-company-api")
-            .WithHttpEndpoint(port: apiPort)
-            .WithHttpsEndpoint(port: apiPort + 1)
+            .WithHttpEndpoint(apiPort)
+            .WithHttpsEndpoint(apiPort + 1)
             .WithReference(db)
             .WaitFor(db)
             .WithReference(organizationApiBuilder)

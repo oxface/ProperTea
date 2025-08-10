@@ -1,5 +1,3 @@
-using Aspire.Hosting.Azure;
-
 using CommunityToolkit.Aspire.Hosting.Dapr;
 
 using Projects;
@@ -21,18 +19,17 @@ public static class OrchestratorServiceResources
             AppPort = apiPort,
             DaprHttpPort = 5902,
             DaprGrpcPort = 5903,
-            MetricsPort = 5904,
-            
+            MetricsPort = 5904
         };
         var api = builder
             .AddProject<ProperTea_Orchestration_Api>("propertea-orchestration-api")
-            .WithHttpEndpoint(port: apiPort)
-            .WithHttpsEndpoint(port: apiPort + 1)
+            .WithHttpEndpoint(apiPort)
+            .WithHttpsEndpoint(apiPort + 1)
             .WithDaprSidecar(apiSidecar)
             .WithOtlpExporter()
             .WithHttpHealthCheck("/health")
             .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development");
-        
+
         waitForProjects.ToList().ForEach(p =>
         {
             api.WithReference(p);

@@ -30,11 +30,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Properties\" />
+        <Folder Include="Properties\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Properties\launchSettings.json" />
+        <None Remove="Properties\launchSettings.json"/>
     </ItemGroup>
 
 </Project>

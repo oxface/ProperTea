@@ -31,8 +31,8 @@ public static class OrganizationServiceResources
         };
         var api = builder
             .AddProject<ProperTea_Organization_Api>("propertea-organization-api")
-            .WithHttpEndpoint(port: apiPort)
-            .WithHttpsEndpoint(port: apiPort + 1)
+            .WithHttpEndpoint(apiPort)
+            .WithHttpsEndpoint(apiPort + 1)
             .WithReference(db)
             .WaitFor(db)
             .WithReference(migrations)

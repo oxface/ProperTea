@@ -15,8 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Endpoints\" />
-      <Folder Include="Properties\" />
+        <Folder Include="Endpoints\"/>
+        <Folder Include="Properties\"/>
     </ItemGroup>
 
 </Project>
