@@ -1,4 +1,4 @@
-using ProperTea.Server.AppHost;
+using ProperTea.AppHost;
 
 var builder = DistributedApplication.CreateBuilder(args);
 

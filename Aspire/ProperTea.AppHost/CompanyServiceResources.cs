@@ -4,33 +4,33 @@ using CommunityToolkit.Aspire.Hosting.Dapr;
 
 using Projects;
 
-namespace ProperTea.Server.AppHost;
+namespace ProperTea.AppHost;
 
-public static class SystemUserServiceResources
+public static class CompanyServiceResources
 {
-    public static IResourceBuilder<ProjectResource> RegisterSystemUserServiceResources(
+    public static IResourceBuilder<ProjectResource> RegisterCompanyServiceResources(
         this IDistributedApplicationBuilder builder,
         IResourceBuilder<AzureSqlServerResource> sqlServerBuilder,
         IResourceBuilder<ProjectResource> organizationApiBuilder)
     {
-        // Ports 5100-5199.
+        // Ports 5200-5299.
         // 10 ports per service.
-        var db = sqlServerBuilder.AddDatabase("propertea-systemuser-db");
-        var migrations = builder.AddProject<ProperTea_SystemUser_MigrationService>(
-                "systemuser-migrations")
+        var db = sqlServerBuilder.AddDatabase("propertea-company-db");
+        var migrations = builder.AddProject<ProperTea_Company_MigrationService>(
+                "company-migrations")
             .WithReference(db)
             .WaitFor(db);
 
         var apiSidecar = new DaprSidecarOptions
         {
-            AppId = "systemuser-api-sidecar",
-            AppPort = 5100,
-            DaprHttpPort = 5101,
-            DaprGrpcPort = 5102,
-            MetricsPort = 5103
+            AppId = "company-api-sidecar",
+            AppPort = 5200,
+            DaprHttpPort = 5201,
+            DaprGrpcPort = 5202,
+            MetricsPort = 5203
         };
         var api = builder
-            .AddProject<ProperTea_SystemUser_Api>("systemuser-api")
+            .AddProject<ProperTea_Company_Api>("company-api")
             .WithReference(db)
             .WaitFor(db)
             .WithReference(organizationApiBuilder)

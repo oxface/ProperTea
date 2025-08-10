@@ -4,7 +4,7 @@ using CommunityToolkit.Aspire.Hosting.Dapr;
 
 using Projects;
 
-namespace ProperTea.Server.AppHost;
+namespace ProperTea.AppHost;
 
 public static class OrganizationServiceResources
 {

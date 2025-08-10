@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Company.Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Company.Api", "ProperTea.Company\ProperTea.Company.Api\ProperTea.Company.Api.csproj", "{A8E76893-0D88-49B3-9DEB-5309825C42D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Server.AppHost", "Aspire\ProperTea.Server.AppHost\ProperTea.Server.AppHost.csproj", "{D1D4CE42-D4D8-4D48-9670-25D586CDEF33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.AppHost", "Aspire\ProperTea.AppHost\ProperTea.AppHost.csproj", "{D1D4CE42-D4D8-4D48-9670-25D586CDEF33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProperTea.Shared.ServiceDefaults", "Shared\ProperTea.Shared.ServiceDefaults\ProperTea.Shared.ServiceDefaults.csproj", "{2F979706-C7EA-4D09-BC0A-E1F6AB3E3DEA}"
 EndProject
