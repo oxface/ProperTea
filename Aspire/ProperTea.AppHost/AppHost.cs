@@ -16,14 +16,18 @@ var identityApi = builder.RegisterIdentityServiceResources(azureSql);
 
 var orchestrationApi = builder.RegisterOrchestratorServiceResources(
 [
-    organizationApi, systemUserApi, companyApi
+    organizationApi,
+    systemUserApi, 
+    companyApi,
+    identityApi
 ]);
 var landlordGateway = builder.RegisterLandlordGatewayResources(
 [
     organizationApi,
     systemUserApi,
     companyApi,
-    orchestrationApi
+    orchestrationApi,
+    identityApi
 ]);
 
 

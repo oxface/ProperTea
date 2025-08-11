@@ -10,11 +10,11 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
     {
         var logger = context.CreateReplaySafeLogger<RegisterOrganizationWorkflow>();
 
-        CreateOrganizationResponse orgResponse;
+        Guid orgResponse;
         try
         {
             var orgRequest = new CreateOrganizationRequest(input.OrganizationName);
-            orgResponse = await context.CallActivityAsync<CreateOrganizationResponse>(
+            orgResponse = await context.CallActivityAsync<Guid>(
                 nameof(CreateOrganizationActivity),
                 orgRequest);
         }
@@ -28,13 +28,13 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
                 "Failed to create organization.");
         }
 
-        var organizationId = orgResponse.OrganizationId;
+        var organizationId = orgResponse;
 
-        var userRequest = new CreateSystemUserRequest(organizationId, input.AdminEmail, input.AdminDisplayName, "Admin");
-        CreateSystemUserResponse userResponse;
+        var userRequest = new CreateSystemUserRequest(input.AdminDisplayName);
+        Guid userResponse;
         try
         {
-            userResponse = await context.CallActivityAsync<CreateSystemUserResponse>(
+            userResponse = await context.CallActivityAsync<Guid>(
                 nameof(CreateSystemUserActivity),
                 userRequest);
         }
@@ -57,13 +57,15 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
                 null,
                 "Failed to create system user.");
         }
-
-        var userId = userResponse.UserId;
+        var userId = userResponse;
+        
         var identityRequest = new CreateUserIdentityRequest(userId, input.AdminEmail, input.AdminPassword);
+        Guid userIdentityResponse;
         try
         {
-            await context.CallActivityAsync<CreateUserIdentityResponse>(
-                nameof(CreateUserIdentityActivity), identityRequest);
+            userIdentityResponse = await context.CallActivityAsync<Guid>(
+                nameof(CreateUserIdentityActivity),
+                identityRequest);
         }
         catch (Exception ex)
         {
@@ -100,4 +102,4 @@ public class RegisterOrganizationWorkflow : Workflow<RegisterOrganizationWorkflo
 
 public record RegisterOrganizationWorkflowInput(string OrganizationName, string AdminEmail, string AdminDisplayName, string AdminPassword);
 
-public record RegisterOrganizationWorkflowResult(bool Success, string? OrganizationId, string? AdminUserId, string? ErrorMessage);
+public record RegisterOrganizationWorkflowResult(bool Success, Guid? OrganizationId, Guid? AdminUserId, string? ErrorMessage);

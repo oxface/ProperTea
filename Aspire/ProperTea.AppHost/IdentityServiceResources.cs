@@ -30,7 +30,7 @@ public static class IdentityServiceResources
             MetricsPort = 5154
         };
         var api = builder
-            .AddProject<ProperTea_SystemUser_Api>("propertea-identity-api")
+            .AddProject<ProperTea_Identity_Api>("propertea-identity-api")
             .WithHttpEndpoint(apiPort)
             .WithHttpsEndpoint(apiPort + 1)
             .WithExternalHttpEndpoints()

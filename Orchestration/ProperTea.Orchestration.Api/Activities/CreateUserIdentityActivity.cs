@@ -3,17 +3,16 @@ using Dapr.Workflow;
 
 namespace ProperTea.Orchestration.Api.Activities;
 
-public class CreateUserIdentityActivity : WorkflowActivity<CreateUserIdentityRequest, CreateUserIdentityResponse>
+public class CreateUserIdentityActivity(DaprClient daprClient) : WorkflowActivity<CreateUserIdentityRequest, Guid>
 {
-    public override async Task<CreateUserIdentityResponse> RunAsync(WorkflowActivityContext context, CreateUserIdentityRequest input)
+    public override async Task<Guid> RunAsync(WorkflowActivityContext context, CreateUserIdentityRequest input)
     {
-        var daprClient = new DaprClientBuilder().Build();
-        var response = await daprClient.InvokeMethodAsync<CreateUserIdentityRequest, CreateUserIdentityResponse>(
-            "propertea-identity-api", "identity", input);
+        var response = await daprClient.InvokeMethodAsync<CreateUserIdentityRequest, Guid>(
+            "propertea-identity-api", "user-identity", input);
         return response;
     }
 }
 
-public record CreateUserIdentityRequest(string UserId, string Email, string Password);
+public record CreateUserIdentityRequest(Guid SystemUserId, string Email, string Password);
 
 public record CreateUserIdentityResponse(bool Success);

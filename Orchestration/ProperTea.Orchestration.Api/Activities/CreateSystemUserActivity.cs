@@ -3,17 +3,16 @@ using Dapr.Workflow;
 
 namespace ProperTea.Orchestration.Api.Activities;
 
-public class CreateSystemUserActivity : WorkflowActivity<CreateSystemUserRequest, CreateSystemUserResponse>
+public class CreateSystemUserActivity(DaprClient daprClient) : WorkflowActivity<CreateSystemUserRequest, Guid>
 {
-    public override async Task<CreateSystemUserResponse> RunAsync(WorkflowActivityContext context, CreateSystemUserRequest input)
+    public override async Task<Guid> RunAsync(WorkflowActivityContext context, CreateSystemUserRequest input)
     {
-        var daprClient = new DaprClientBuilder().Build();
-        var response = await daprClient.InvokeMethodAsync<CreateSystemUserRequest, CreateSystemUserResponse>(
+        var response = await daprClient.InvokeMethodAsync<CreateSystemUserRequest, Guid>(
             "propertea-systemuser-api", "system-user", input);
         return response;
     }
 }
 
-public record CreateSystemUserRequest(string OrganizationId, string Email, string DisplayName, string Role);
+public record CreateSystemUserRequest(string Name);
 
 public record CreateSystemUserResponse(string UserId);

@@ -34,6 +34,7 @@ public class OrganizationDomainService(IOrganizationRepository repository, IDoma
 
         if (!organization.AllowDelete())
             throw new InvalidOperationException("System owner cannot be deleted");
+        
         await repository.DeleteAsync(organization, ct);
 
         eventDispatcher.Enqueue(new OrganizationDeletedDomainEvent(organization.Id));

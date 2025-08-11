@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 using ProperTea.Identity.Api;
 using ProperTea.Identity.Api.Endpoints;
+using ProperTea.Shared.ServiceDefaults;
 
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 builder.Services.AddDbContext<UserIdentityDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("propertea-identity-db")));
@@ -24,6 +27,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapUserIdentityEndpoints();
+app.MapDefaultEndpoints()
+    .MapUserIdentityEndpoints();
 
 app.Run();

@@ -3,13 +3,12 @@ using Dapr.Workflow;
 
 namespace ProperTea.Orchestration.Api.Activities;
 
-public class DeleteOrganizationActivity : WorkflowActivity<string, object>
+public class DeleteOrganizationActivity(DaprClient daprClient) : WorkflowActivity<string, object>
 {
     public override async Task<object> RunAsync(WorkflowActivityContext context, string organizationId)
     {
-        var daprClient = new DaprClientBuilder().Build();
         await daprClient.InvokeMethodAsync(
-            HttpMethod.Delete, "propertea-organization-api", "organization", organizationId);
+            HttpMethod.Delete, "propertea-organization-api", $"organization/{organizationId}");
         return null!;
     }
 }
