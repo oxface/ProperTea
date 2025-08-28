@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Shared/ProperTea.Contracts/ProperTea.Contracts.csproj" />
+    <ProjectReference Include="../../Shared/ProperTea.Infrastructure/ProperTea.Infrastructure.csproj" />
+    <ProjectReference Include="../../Shared/ProperTea.ServiceDefaults/ProperTea.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="1.2.42" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.41.0" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.0" />
+  </ItemGroup>
+
+</Project>
