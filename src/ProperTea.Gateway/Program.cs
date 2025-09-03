@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Threading.RateLimiting;
-using ProperTea.Infrastructure.Extensions;
+using ProperTea.Infrastructure.Shared.Extensions;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

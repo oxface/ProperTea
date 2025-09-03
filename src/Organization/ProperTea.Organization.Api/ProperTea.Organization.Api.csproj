@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../Shared/ProperTea.Contracts/ProperTea.Contracts.csproj" />
-    <ProjectReference Include="../../Shared/ProperTea.Infrastructure/ProperTea.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\ProperTea.Infrastructure.Shared\ProperTea.Infrastructure.Shared.csproj" />
     <ProjectReference Include="../../Shared/ProperTea.ServiceDefaults/ProperTea.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
     <PackageReference Include="Scalar.AspNetCore" Version="1.2.42" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.41.0" />

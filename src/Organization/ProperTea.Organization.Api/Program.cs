@@ -1,5 +1,6 @@
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.Organization.Api.Application.Handlers;
 using ProperTea.Organization.Api.Domain.Organizations;
 using ProperTea.Organization.Api.Endpoints;
@@ -9,6 +10,17 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+
+// Add Authentication and Authorization
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Authentication:Authority"];
+        options.Audience = builder.Configuration["Authentication:Audience"];
+        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+    });
+
+builder.Services.AddAuthorization();
 
 // Add API documentation
 builder.Services.AddEndpointsApiExplorer();
@@ -32,7 +44,7 @@ builder.Services.AddScoped<Container>(serviceProvider =>
 });
 
 // Add custom CQRS
-builder.Services.AddCustomCqrs();
+builder.Services.AddProperCqrs();
 
 // Add command and query handlers
 builder.Services.AddCommandHandlers(typeof(CreateOrganizationCommandHandler));
@@ -54,6 +66,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Add Authentication and Authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Map endpoints
 app.MapOrganizationEndpoints();

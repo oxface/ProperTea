@@ -1,4 +1,4 @@
-using ProperTea.Infrastructure.Persistence;
+using ProperTea.Infrastructure.Shared.Persistence;
 
 namespace ProperTea.Identity.Api.Domain.Identities;
 

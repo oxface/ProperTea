@@ -1,16 +1,16 @@
-using ProperTea.Infrastructure.Domain;
+using ProperTea.Infrastructure.Shared.Domain;
 using ProperTea.Contracts.Events;
 
 namespace ProperTea.UserManagement.Api.Domain.Users;
 
 public class SystemUser : AggregateRoot
 {
-    public string Email { get; private set; }
-    public string FullName { get; private set; }
+    public string Email { get; private set; } = null!;
+    public string FullName { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
     
-    private readonly List<OrganizationMembership> _organizationMemberships = new();
+    private readonly List<OrganizationMembership> _organizationMemberships = [];
     public IReadOnlyCollection<OrganizationMembership> OrganizationMemberships => _organizationMemberships.AsReadOnly();
 
     private SystemUser() { } // For deserialization
@@ -45,7 +45,7 @@ public class SystemUser : AggregateRoot
     public void AddOrganizationMembership(Guid organizationId, UserRole role)
     {
         if (_organizationMemberships.Any(m => m.OrganizationId == organizationId))
-            return; // Already a member
+            return;
 
         var membership = new OrganizationMembership(Guid.NewGuid(), organizationId, role, DateTime.UtcNow);
         _organizationMemberships.Add(membership);

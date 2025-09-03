@@ -1,5 +1,5 @@
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Extensions;
+using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.UserManagement.Api.Application.Handlers;
 using ProperTea.UserManagement.Api.Domain.Users;
 using ProperTea.UserManagement.Api.Endpoints;
@@ -10,43 +10,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-// Add API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
-// Global Error Handling - using shared infrastructure
 builder.Services.AddGlobalErrorHandling("ProperTea.UserManagement.Api");
 
-// Add Azure Cosmos DB
 builder.Services.AddSingleton<CosmosClient>(serviceProvider =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("CosmosDb") ?? 
-        "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b4mXFQ2K/PlhKQYABqQjvOJV1BcOPw==";
+    var connectionString = builder.Configuration.GetConnectionString("propertea-cosmos")
+        ?? throw new InvalidOperationException("CosmosDb connection string is not configured.");
     return new CosmosClient(connectionString);
 });
 
 builder.Services.AddScoped<Container>(serviceProvider =>
 {
     var cosmosClient = serviceProvider.GetRequiredService<CosmosClient>();
-    return cosmosClient.GetContainer("ProperTea", "Users");
+    return cosmosClient.GetContainer("propertea-user-management-db", "users");
 });
 
-// Add custom CQRS
-builder.Services.AddCustomCqrs();
+builder.Services.AddProperCqrs();
 
-// Add command and query handlers
 builder.Services.AddCommandHandlers(typeof(CreateSystemUserCommandHandler));
 builder.Services.AddQueryHandlers(typeof(GetUserByIdQueryHandler));
 
-// Add repositories
-builder.Services.AddScoped<ISystemUserRepository, CosmosSystemUserRepository>();
+builder.Services.AddScoped<ISystemUserRepository, CosmosSystemUserRepository>(f => 
+    new CosmosSystemUserRepository(f.GetRequiredService<CosmosClient>(),
+        "propertea-user-management-db",
+        "users",
+        "/id"));
 
 var app = builder.Build();
 
-// Global Error Handling - using shared infrastructure
 app.UseGlobalErrorHandling("ProperTea.UserManagement.Api");
 
-// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -55,7 +51,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Map endpoints
 app.MapUserEndpoints();
 
 app.MapDefaultEndpoints();

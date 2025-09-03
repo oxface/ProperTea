@@ -1,12 +1,12 @@
-using ProperTea.Infrastructure.Domain;
+using ProperTea.Infrastructure.Shared.Domain;
 using ProperTea.Contracts.Events;
 
 namespace ProperTea.Organization.Api.Domain.Organizations;
 
 public class Organization : AggregateRoot
 {
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string Name { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
     public Guid CreatedByUserId { get; private set; }

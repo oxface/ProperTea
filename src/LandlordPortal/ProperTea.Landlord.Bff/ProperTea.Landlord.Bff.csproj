@@ -8,9 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../../Shared/ProperTea.Contracts/ProperTea.Contracts.csproj" />
         <ProjectReference Include="../../Shared/ProperTea.ServiceDefaults/ProperTea.ServiceDefaults.csproj" />
-        <ProjectReference Include="../../Shared/ProperTea.Infrastructure/ProperTea.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\Shared\ProperTea.Infrastructure.Shared\ProperTea.Infrastructure.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

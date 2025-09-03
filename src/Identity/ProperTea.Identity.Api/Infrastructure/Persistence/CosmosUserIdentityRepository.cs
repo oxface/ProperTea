@@ -1,12 +1,13 @@
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Cosmos;
+using ProperTea.Infrastructure.Shared.Cosmos;
 using ProperTea.Identity.Api.Domain.Identities;
 
 namespace ProperTea.Identity.Api.Infrastructure.Persistence;
 
 public class CosmosUserIdentityRepository : CosmosRepository<UserIdentity>, IUserIdentityRepository
 {
-    public CosmosUserIdentityRepository(Container container) : base(container)
+    public CosmosUserIdentityRepository(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey = "/id") 
+        : base(cosmosClient, databaseName, containerName, partitionKey)
     {
     }
 

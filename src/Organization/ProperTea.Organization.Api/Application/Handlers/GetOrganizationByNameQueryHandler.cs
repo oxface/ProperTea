@@ -1,28 +1,20 @@
 using ProperTea.Contracts.CQRS;
-using ProperTea.Contracts.DTOs.Organization;
+using ProperTea.Organization.Api.Application.Models;
 using ProperTea.Organization.Api.Application.Queries;
 using ProperTea.Organization.Api.Domain.Organizations;
 
 namespace ProperTea.Organization.Api.Application.Handlers;
 
-public class GetOrganizationByNameQueryHandler : IQueryHandler<GetOrganizationByNameQuery, OrganizationDto?>
+public class GetOrganizationByNameQueryHandler(IOrganizationRepository organizationRepository)
+    : IQueryHandler<GetOrganizationByNameQuery, OrganizationModel?>
 {
-    private readonly IOrganizationRepository _organizationRepository;
-
-    public GetOrganizationByNameQueryHandler(IOrganizationRepository organizationRepository)
+    public async Task<OrganizationModel?> HandleAsync(GetOrganizationByNameQuery query, CancellationToken cancellationToken = default)
     {
-        _organizationRepository = organizationRepository;
-    }
-
-    public async Task<OrganizationDto?> HandleAsync(GetOrganizationByNameQuery query, CancellationToken cancellationToken = default)
-    {
-        var organization = await _organizationRepository.GetByNameAsync(query.Name, cancellationToken);
+        var organization = await organizationRepository.GetByNameAsync(query.Name, cancellationToken);
         
-        return organization == null ? null : new OrganizationDto(
+        return organization == null ? null : new OrganizationModel(
             organization.Id,
             organization.Name,
-            organization.Description,
-            organization.CreatedAt,
-            organization.IsActive);
+            organization.Description);
     }
 }

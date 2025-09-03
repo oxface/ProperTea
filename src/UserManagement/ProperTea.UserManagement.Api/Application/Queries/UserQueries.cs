@@ -2,22 +2,22 @@ using ProperTea.Contracts.CQRS;
 
 namespace ProperTea.UserManagement.Api.Application.Queries;
 
-public record GetUserByIdQuery(Guid UserId) : IQuery<UserDto?>;
+public record GetUserByIdQuery(Guid UserId) : IQuery<SystemUserModel?>;
 
-public record GetUserByEmailQuery(string Email) : IQuery<UserDto?>;
+public record GetUserByEmailQuery(string Email) : IQuery<SystemUserModel?>;
 
 public record CheckUserExistsQuery(string Email) : IQuery<bool>;
 
-public record UserDto(
+public record SystemUserModel(
     Guid Id,
     string Email,
     string FullName,
     DateTime CreatedAt,
     bool IsActive,
-    IEnumerable<OrganizationMembershipDto> Organizations
+    IEnumerable<OrganizationMembershipModel> Organizations
 );
 
-public record OrganizationMembershipDto(
+public record OrganizationMembershipModel(
     Guid OrganizationId,
     string Role,
     DateTime JoinedAt

@@ -1,18 +1,28 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Polly;
 using Polly.Extensions.Http;
+using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.WorkflowOrchestrator.Endpoints;
+using ProperTea.WorkflowOrchestrator.Endpoints.Organization;
+using ProperTea.WorkflowOrchestrator.Endpoints.UserIdentity;
+using ProperTea.WorkflowOrchestrator.Services;
+using Scalar.AspNetCore;
 
-var builder = FunctionsApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Configuration.AddEnvironmentVariables();
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+    .AddEnvironmentVariables();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
+
+builder.Services.AddGlobalErrorHandling("ProperTea.WorkflowOrchestrator");
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -28,24 +38,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-var services = builder.Services;
-        
 var retryPolicy = HttpPolicyExtensions
     .HandleTransientHttpError()
     .WaitAndRetryAsync(3, retryAttempt =>
         TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-services.AddHttpClient("Gateway", client =>
+builder.Services.AddHttpClient<IGatewayClient, GatewayClient>(client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-WorkflowOrchestrator/1.0");
         client.BaseAddress = new Uri("https://gateway");
+        client.Timeout = TimeSpan.FromSeconds(300);
     })
     .AddServiceDiscovery()
     .AddPolicyHandler(retryPolicy);
-        
-services.AddScoped<HttpClient>(serviceProvider =>
-    serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("Gateway"));
 
-builder.ConfigureFunctionsWebApplication();
+var app = builder.Build();
 
-builder.Build().Run();
+app.UseGlobalErrorHandling("ProperTea.WorkflowOrchestrator");
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapUserWorkflowEndpoints();
+app.MapOrganizationWorkflowEndpoints();
+
+app.MapDefaultEndpoints();
+
+app.Run();

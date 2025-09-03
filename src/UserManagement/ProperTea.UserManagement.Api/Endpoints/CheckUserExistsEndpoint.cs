@@ -14,8 +14,7 @@ public static class CheckUserExistsEndpoint
             .WithDescription("Checks whether a user exists by their email address")
             .WithTags("Users")
             .Produces<bool>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status500InternalServerError)
-            .RequireAuthorization();
+            .Produces(StatusCodes.Status500InternalServerError);
     }
 
     private static async Task<IResult> HandleAsync(
@@ -28,7 +27,11 @@ public static class CheckUserExistsEndpoint
             var query = new CheckUserExistsQuery(email);
             var exists = await queryBus.SendAsync(query);
 
-            return Results.Ok(exists);
+            return Results.Ok( 
+                new 
+                {
+                    Exists = exists
+                });
         }
         catch (Exception ex)
         {

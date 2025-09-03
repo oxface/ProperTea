@@ -1,4 +1,4 @@
-using ProperTea.Infrastructure.Domain;
+using ProperTea.Infrastructure.Shared.Domain;
 using ProperTea.Contracts.Events;
 
 namespace ProperTea.Identity.Api.Domain.Identities;
@@ -6,8 +6,8 @@ namespace ProperTea.Identity.Api.Domain.Identities;
 public class UserIdentity : AggregateRoot
 {
     public Guid UserId { get; private set; }
-    public string Email { get; private set; }
-    public string PasswordHash { get; private set; }
+    public string Email { get; private set; } = null!;
+    public string PasswordHash { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public DateTime? LastLoginAt { get; private set; }
     public bool IsActive { get; private set; }

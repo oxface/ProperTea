@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Polly;
 using Polly.Extensions.Http;
 using Scalar.AspNetCore;
-using System.Text;
 using System.Text.Json.Serialization;
-using ProperTea.Infrastructure.Extensions;
-using ProperTea.Landlord.Bff.Endpoints;
-using ProperTea.Landlord.Bff.Services;
+using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.Landlord.Bff.Endpoints.Organization;
+using ProperTea.Landlord.Bff.Endpoints.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +36,7 @@ var retryPolicy = HttpPolicyExtensions
     .WaitAndRetryAsync(3, retryAttempt =>
         TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-builder.Services.AddHttpClient<IGatewayClient, GatewayClient>(client =>
+builder.Services.AddHttpClient("gateway", client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-LandlordBff/1.0");
         client.BaseAddress = new Uri("https://gateway");
@@ -82,6 +80,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapOrganizationEndpoints();
+app.MapUserEndpoints();
 
 app.MapDefaultEndpoints();
 

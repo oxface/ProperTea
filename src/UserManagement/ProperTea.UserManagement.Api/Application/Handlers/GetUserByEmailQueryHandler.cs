@@ -4,7 +4,7 @@ using ProperTea.UserManagement.Api.Domain.Users;
 
 namespace ProperTea.UserManagement.Api.Application.Handlers;
 
-public class GetUserByEmailQueryHandler : IQueryHandler<GetUserByEmailQuery, UserDto?>
+public class GetUserByEmailQueryHandler : IQueryHandler<GetUserByEmailQuery, SystemUserModel?>
 {
     private readonly ISystemUserRepository _userRepository;
 
@@ -13,21 +13,21 @@ public class GetUserByEmailQueryHandler : IQueryHandler<GetUserByEmailQuery, Use
         _userRepository = userRepository;
     }
 
-    public async Task<UserDto?> HandleAsync(GetUserByEmailQuery query, CancellationToken cancellationToken = default)
+    public async Task<SystemUserModel?> HandleAsync(GetUserByEmailQuery query, CancellationToken cancellationToken = default)
     {
         var user = await _userRepository.GetByEmailAsync(query.Email, cancellationToken);
         return user == null ? null : MapToDto(user);
     }
 
-    private static UserDto MapToDto(SystemUser user)
+    private static SystemUserModel MapToDto(SystemUser user)
     {
-        return new UserDto(
+        return new SystemUserModel(
             user.Id,
             user.Email,
             user.FullName,
             user.CreatedAt,
             user.IsActive,
-            user.OrganizationMemberships.Select(m => new OrganizationMembershipDto(
+            user.OrganizationMemberships.Select(m => new OrganizationMembershipModel(
                 m.OrganizationId,
                 m.Role.ToString(),
                 m.JoinedAt)));

@@ -1,12 +1,13 @@
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Cosmos;
+using ProperTea.Infrastructure.Shared.Cosmos;
 using ProperTea.Organization.Api.Domain.Organizations;
 
 namespace ProperTea.Organization.Api.Infrastructure.Persistence;
 
 public class CosmosOrganizationRepository : CosmosRepository<Domain.Organizations.Organization>, IOrganizationRepository
 {
-    public CosmosOrganizationRepository(Container container) : base(container)
+    public CosmosOrganizationRepository(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey = "/id") 
+        : base(cosmosClient, databaseName, containerName, partitionKey)
     {
     }
 
