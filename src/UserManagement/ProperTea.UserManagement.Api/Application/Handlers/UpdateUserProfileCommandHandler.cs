@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Commands;
 using ProperTea.UserManagement.Api.Domain.Users;
 
@@ -16,10 +16,7 @@ public class UpdateUserProfileCommandHandler : ICommandHandler<UpdateUserProfile
     public async Task HandleAsync(UpdateUserProfileCommand command, CancellationToken cancellationToken = default)
     {
         var user = await _userRepository.GetByIdAsync(command.UserId, cancellationToken);
-        if (user == null)
-        {
-            throw new InvalidOperationException($"User with ID '{command.UserId}' not found");
-        }
+        if (user == null) throw new InvalidOperationException($"User with ID '{command.UserId}' not found");
 
         user.UpdateProfile(command.FullName);
         await _userRepository.SaveAsync(user, cancellationToken);

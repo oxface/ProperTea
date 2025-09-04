@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
@@ -13,7 +12,7 @@ public static class GetUserByIdEndpoint
             .WithSummary("Get user by ID")
             .WithDescription("Retrieves a user by their unique identifier")
             .WithTags("Users")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError)
             .RequireAuthorization();
@@ -27,7 +26,7 @@ public static class GetUserByIdEndpoint
         try
         {
             var query = new GetUserByIdQuery(id);
-            var result = await queryBus.SendAsync(query);
+            var result = await queryBus.SendAsync<GetUserByIdQuery, SystemUserModel>(query);
 
             if (result == null)
             {

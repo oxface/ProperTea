@@ -11,7 +11,7 @@ public static class CreateOrganizationEndpoint
             .WithSummary("Create a new organization")
             .WithDescription("Creates a new organization directly through the organization service")
             .WithTags("Organizations")
-            .Produces<CreateOrganizationResponse>(StatusCodes.Status200OK)
+            .Produces<CreateOrganizationResponse>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -30,10 +30,10 @@ public static class CreateOrganizationEndpoint
         try
         {
             var response = await gatewayClient.PostAsJsonAsync(
-                "/api/organizations", 
-                request, 
+                "/api/organizations",
+                request,
                 cancellationToken);
-            
+
             if (!response.IsSuccessStatusCode)
             {
                 logger.LogError("Failed to create organization via Gateway");

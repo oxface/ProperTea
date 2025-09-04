@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Commands;
 using ProperTea.UserManagement.Api.Application.Queries;
 
@@ -14,7 +14,7 @@ public static class CreateUserEndpoint
             .WithSummary("Create a new user")
             .WithDescription("Creates a new system user with email and full name")
             .WithTags("Users")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -32,9 +32,8 @@ public static class CreateUserEndpoint
             var command = new CreateSystemUserCommand(request.Email, request.FullName);
             await commandBus.SendAsync(command);
 
-            // Get the created user to return the ID
             var query = new GetUserByEmailQuery(request.Email);
-            var user = await queryBus.SendAsync(query);
+            var user = await queryBus.SendAsync<GetUserByEmailQuery, SystemUserModel>(query);
 
             return Results.Ok(new { UserId = user!.Id });
         }

@@ -1,10 +1,9 @@
-using ProperTea.Contracts.CQRS;
-using ProperTea.Organization.Api.Application.Models;
+using ProperTea.Cqrs;
 
 namespace ProperTea.Organization.Api.Application.Queries;
 
-public record GetOrganizationByIdQuery(Guid OrganizationId) : IQuery<OrganizationModel?>;
+public record GetOrganizationByIdQuery(Guid OrganizationId) : IQuery;
 
-public record GetOrganizationByNameQuery(string Name) : IQuery<OrganizationModel?>;
+public record GetOrganizationByNameQuery(string Name) : IQuery;
 
-public record CheckOrganizationExistsQuery(Guid OrganizationId) : IQuery<bool>;
+public record CheckOrganizationExistsQuery(Guid OrganizationId) : IQuery;

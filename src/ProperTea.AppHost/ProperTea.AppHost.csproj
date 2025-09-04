@@ -8,19 +8,19 @@
         <Nullable>enable</Nullable>
         <UserSecretsId>41d95702-5141-4adf-ad03-a6472b72ccec</UserSecretsId>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.4.1" />
-        <PackageReference Include="Aspire.Hosting.Azure.AppContainers" Version="9.4.1" />
-        <PackageReference Include="Aspire.Hosting.Azure.CosmosDB" Version="9.4.2" />
-        <PackageReference Include="Aspire.Hosting.Azure.Functions" Version="9.4.1-preview.1.25408.4" />
-        <PackageReference Include="Aspire.Hosting.Yarp" Version="9.4.1-preview.1.25408.4" />
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.4.2"/>
+        <PackageReference Include="Aspire.Hosting.Azure.AppContainers" Version="9.4.2"/>
+        <PackageReference Include="Aspire.Hosting.Azure.CosmosDB" Version="9.4.2"/>
+        <PackageReference Include="Aspire.Hosting.Azure.Functions" Version="9.4.2-preview.1.25428.12"/>
+        <PackageReference Include="Aspire.Hosting.Yarp" Version="9.4.2-preview.1.25428.12"/>
     </ItemGroup>
-    
+
     <ItemGroup>
-      <ProjectReference Include="..\LandlordPortal\ProperTea.Landlord.Bff\ProperTea.Landlord.Bff.csproj" />
-      <ProjectReference Include="..\Orchestration\ProperTea.WorkflowOrchestrator\ProperTea.WorkflowOrchestrator.csproj" />
-      <ProjectReference Include="..\ProperTea.Gateway\ProperTea.Gateway.csproj" />
-      <ProjectReference Include="..\UserManagement\ProperTea.UserManagement.Api\ProperTea.UserManagement.Api.csproj" />
+        <ProjectReference Include="..\LandlordPortal\ProperTea.Landlord.Bff\ProperTea.Landlord.Bff.csproj"/>
+        <ProjectReference Include="..\Orchestration\ProperTea.WorkflowOrchestrator\ProperTea.WorkflowOrchestrator.csproj"/>
+        <ProjectReference Include="..\ProperTea.Gateway\ProperTea.Gateway.csproj"/>
+        <ProjectReference Include="..\UserManagement\ProperTea.UserManagement.Api\ProperTea.UserManagement.Api.csproj"/>
     </ItemGroup>
 </Project>

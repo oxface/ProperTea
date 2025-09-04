@@ -7,7 +7,7 @@ public static class OrganizationEndpoints
         var group = app.MapGroup("/api/organizations")
             .WithTags("Organizations")
             .RequireAuthorization();
-        
+
         CreateOrganizationEndpoint.Map(app);
     }
 }

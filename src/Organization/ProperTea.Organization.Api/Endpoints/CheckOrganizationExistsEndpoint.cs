@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Queries;
 
 namespace ProperTea.Organization.Api.Endpoints;
@@ -13,7 +12,7 @@ public static class CheckOrganizationExistsEndpoint
             .WithSummary("Check if organization exists")
             .WithDescription("Checks whether an organization exists by its ID")
             .WithTags("Organizations")
-            .Produces<bool>(StatusCodes.Status200OK)
+            .Produces<bool>()
             .Produces(StatusCodes.Status500InternalServerError)
             .RequireAuthorization();
     }
@@ -26,9 +25,13 @@ public static class CheckOrganizationExistsEndpoint
         try
         {
             var query = new CheckOrganizationExistsQuery(id);
-            var exists = await queryBus.SendAsync(query);
+            var exists = await queryBus.SendAsync<CheckOrganizationExistsQuery, bool>(query);
 
-            return Results.Ok(exists);
+            return Results.Ok(
+                new
+                {
+                    Exists = exists
+                });
         }
         catch (Exception ex)
         {

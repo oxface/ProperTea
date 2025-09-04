@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.WorkflowOrchestrator.Services;
+using ProperTea.Shared.Infrastructure.Extensions;
 
 namespace ProperTea.WorkflowOrchestrator.Endpoints.Organization;
 
@@ -10,7 +10,7 @@ public static class OrganizationWorkflowEndpoints
         var group = app.MapGroup("/api/workflows/organizations")
             .WithTags("Organization Workflows")
             .RequireAuthorization();
-        
+
         CreateOrganizationEndpoint.Map(app);
     }
 }
@@ -24,7 +24,7 @@ public static class CreateOrganizationEndpoint
             .WithSummary("Create a new organization")
             .WithDescription("Creates a new organization through the organization service")
             .WithTags("Organization Workflows")
-            .Produces<CreateOrganizationWorkflowResponse>(StatusCodes.Status200OK)
+            .Produces<CreateOrganizationWorkflowResponse>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -33,7 +33,7 @@ public static class CreateOrganizationEndpoint
 
     private static async Task<IResult> HandleAsync(
         [FromBody] CreateOrganizationWorkflowRequest request,
-        IGatewayClient gatewayClient,
+        IHttpClientFactory httpClientFactory,
         ILogger<Program> logger,
         CancellationToken cancellationToken = default)
     {
@@ -41,12 +41,14 @@ public static class CreateOrganizationEndpoint
 
         try
         {
-            // Call organization service directly through Gateway
+            var gatewayClient = httpClientFactory.CreateClient("gateway");
+
             var response = await gatewayClient.PostAsync<CreateOrganizationRequest, CreateOrganizationResponse>(
-                "/api/organizations", 
-                new CreateOrganizationRequest(request.Name, request.Description), 
+                "/api/organizations",
+                new CreateOrganizationRequest(request.Name, request.Description),
+                logger,
                 cancellationToken);
-            
+
             if (response == null)
             {
                 logger.LogError("Failed to create organization via Gateway");
@@ -57,10 +59,10 @@ public static class CreateOrganizationEndpoint
             }
 
             logger.LogInformation("Organization created successfully: {OrganizationId}", response.OrganizationId);
-            
+
             return Results.Ok(new CreateOrganizationWorkflowResponse(
-                response.OrganizationId, 
-                response.Name, 
+                response.OrganizationId,
+                response.Name,
                 response.Description));
         }
         catch (Exception ex)
@@ -74,7 +76,6 @@ public static class CreateOrganizationEndpoint
     }
 }
 
-// Request/Response DTOs for Organization Workflows
 public record CreateOrganizationWorkflowRequest(
     string Name,
     string Description);
@@ -85,4 +86,5 @@ public record CreateOrganizationWorkflowResponse(
     string Description);
 
 public record CreateOrganizationRequest(string Name, string Description);
+
 public record CreateOrganizationResponse(Guid OrganizationId, string Name, string Description);

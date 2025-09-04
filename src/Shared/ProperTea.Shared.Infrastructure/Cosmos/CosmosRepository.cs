@@ -1,15 +1,17 @@
+using System.Net;
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Shared.Domain;
-using ProperTea.Infrastructure.Shared.Persistence;
+using ProperTea.Shared.Infrastructure.Domain;
+using ProperTea.Shared.Infrastructure.Persistence;
 
-namespace ProperTea.Infrastructure.Shared.Cosmos;
+namespace ProperTea.Shared.Infrastructure.Cosmos;
 
 public class CosmosRepository<T> : ICosmosRepository<T> where T : AggregateRoot
 {
     private readonly Container _container;
     private readonly string _partitionKey;
 
-    public CosmosRepository(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey = "/id")
+    public CosmosRepository(CosmosClient cosmosClient, string databaseName, string containerName,
+        string partitionKey = "/id")
     {
         _container = cosmosClient.GetContainer(databaseName, containerName);
         _partitionKey = partitionKey;
@@ -20,13 +22,13 @@ public class CosmosRepository<T> : ICosmosRepository<T> where T : AggregateRoot
         try
         {
             var response = await _container.ReadItemAsync<T>(
-                id.ToString(), 
-                new PartitionKey(id.ToString()), 
+                id.ToString(),
+                new PartitionKey(id.ToString()),
                 cancellationToken: cancellationToken);
-            
+
             return response.Resource;
         }
-        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
         {
             return null;
         }
@@ -35,18 +37,18 @@ public class CosmosRepository<T> : ICosmosRepository<T> where T : AggregateRoot
     public async Task SaveAsync(T aggregate, CancellationToken cancellationToken = default)
     {
         await _container.UpsertItemAsync(
-            aggregate, 
-            new PartitionKey(aggregate.Id.ToString()), 
+            aggregate,
+            new PartitionKey(aggregate.Id.ToString()),
             cancellationToken: cancellationToken);
-        
+
         aggregate.ClearDomainEvents();
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await _container.DeleteItemAsync<T>(
-            id.ToString(), 
-            new PartitionKey(id.ToString()), 
+            id.ToString(),
+            new PartitionKey(id.ToString()),
             cancellationToken: cancellationToken);
     }
 

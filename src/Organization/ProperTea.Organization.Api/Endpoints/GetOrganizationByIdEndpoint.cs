@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
+using ProperTea.Organization.Api.Application.Models;
 using ProperTea.Organization.Api.Application.Queries;
 
 namespace ProperTea.Organization.Api.Endpoints;
@@ -13,7 +13,7 @@ public static class GetOrganizationByIdEndpoint
             .WithSummary("Get organization by ID")
             .WithDescription("Retrieves an organization by its unique identifier")
             .WithTags("Organizations")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError)
             .RequireAuthorization();
@@ -27,7 +27,7 @@ public static class GetOrganizationByIdEndpoint
         try
         {
             var query = new GetOrganizationByIdQuery(id);
-            var result = await queryBus.SendAsync(query);
+            var result = await queryBus.SendAsync<GetOrganizationByIdQuery, OrganizationModel?>(query);
 
             if (result == null)
             {

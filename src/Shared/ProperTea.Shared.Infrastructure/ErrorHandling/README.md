@@ -5,16 +5,19 @@ This folder contains shared error handling infrastructure that can be used acros
 ## Components
 
 ### GlobalExceptionHandler
+
 - Handles all unhandled exceptions
 - Maps exceptions to appropriate HTTP status codes
 - Provides structured logging with correlation IDs
 - Returns RFC 7807 compliant ProblemDetails responses
 
 ### StatusCodeHelpers
+
 - Provides consistent status code titles and details
 - Creates standardized ProblemDetails for status code responses
 
 ### ErrorHandlingExtensions
+
 - Extension methods for easy integration into services
 - Single-line setup for comprehensive error handling
 
@@ -33,7 +36,7 @@ app.UseGlobalErrorHandling("YourServiceName");
 ### Supported Exception Mappings
 
 - `UnauthorizedAccessException` → 401 Unauthorized
-- `ArgumentException` → 400 Bad Request  
+- `ArgumentException` → 400 Bad Request
 - `InvalidOperationException` → 400 Bad Request
 - `TimeoutException` → 408 Request Timeout
 - `HttpRequestException` → 502 Bad Gateway

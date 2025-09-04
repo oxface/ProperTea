@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Commands;
 
 namespace ProperTea.Organization.Api.Endpoints;
@@ -13,7 +12,7 @@ public static class ActivateOrganizationEndpoint
             .WithSummary("Activate an organization")
             .WithDescription("Activates an organization by its ID")
             .WithTags("Organizations")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             .RequireAuthorization();

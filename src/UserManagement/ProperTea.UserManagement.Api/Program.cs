@@ -1,5 +1,9 @@
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.Cqrs;
+using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using ProperTea.UserManagement.Api.Application.Handlers;
 using ProperTea.UserManagement.Api.Domain.Users;
 using ProperTea.UserManagement.Api.Endpoints;
@@ -10,34 +14,47 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+    .AddEnvironmentVariables();
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Authentication:Authority"];
+        options.Audience = builder.Configuration["Authentication:Audience"];
+        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+    });
+builder.Services.AddAuthorization();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 builder.Services.AddGlobalErrorHandling("ProperTea.UserManagement.Api");
 
-builder.Services.AddSingleton<CosmosClient>(serviceProvider =>
+builder.Services.AddScoped<CosmosClient>(serviceProvider =>
 {
     var connectionString = builder.Configuration.GetConnectionString("propertea-cosmos")
-        ?? throw new InvalidOperationException("CosmosDb connection string is not configured.");
+                           ?? throw new InvalidOperationException("CosmosDb connection string is not configured.");
     return new CosmosClient(connectionString);
 });
 
-builder.Services.AddScoped<Container>(serviceProvider =>
-{
-    var cosmosClient = serviceProvider.GetRequiredService<CosmosClient>();
-    return cosmosClient.GetContainer("propertea-user-management-db", "users");
-});
-
 builder.Services.AddProperCqrs();
+builder.Services.AddProperCqrsCommandHandlers(typeof(CreateSystemUserCommandHandler).Assembly);
+builder.Services.AddProperCqrsQueryHandlers(typeof(GetUserByIdQueryHandler).Assembly);
 
-builder.Services.AddCommandHandlers(typeof(CreateSystemUserCommandHandler));
-builder.Services.AddQueryHandlers(typeof(GetUserByIdQueryHandler));
-
-builder.Services.AddScoped<ISystemUserRepository, CosmosSystemUserRepository>(f => 
+builder.Services.AddScoped<ISystemUserRepository, CosmosSystemUserRepository>(f =>
     new CosmosSystemUserRepository(f.GetRequiredService<CosmosClient>(),
         "propertea-user-management-db",
-        "users",
-        "/id"));
+        "users"));
+
 
 var app = builder.Build();
 
@@ -50,6 +67,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapUserEndpoints();
 

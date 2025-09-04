@@ -2,11 +2,10 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Polly;
 using Polly.Extensions.Http;
-using ProperTea.Infrastructure.Shared.Extensions;
-using ProperTea.WorkflowOrchestrator.Endpoints;
+using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using ProperTea.WorkflowOrchestrator.Endpoints.Organization;
 using ProperTea.WorkflowOrchestrator.Endpoints.UserIdentity;
-using ProperTea.WorkflowOrchestrator.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +42,7 @@ var retryPolicy = HttpPolicyExtensions
     .WaitAndRetryAsync(3, retryAttempt =>
         TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-builder.Services.AddHttpClient<IGatewayClient, GatewayClient>(client =>
+builder.Services.AddHttpClient("gateway", client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-WorkflowOrchestrator/1.0");
         client.BaseAddress = new Uri("https://gateway");
@@ -56,16 +55,16 @@ var app = builder.Build();
 
 app.UseGlobalErrorHandling("ProperTea.WorkflowOrchestrator");
 
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapUserWorkflowEndpoints();
 app.MapOrganizationWorkflowEndpoints();

@@ -1,18 +1,13 @@
-using ProperTea.Infrastructure.Shared.Domain;
-using ProperTea.Contracts.Events;
+using ProperTea.Domain.Shared.Events;
+using ProperTea.Shared.Infrastructure.Domain;
 
 namespace ProperTea.Identity.Api.Domain.Identities;
 
 public class UserIdentity : AggregateRoot
 {
-    public Guid UserId { get; private set; }
-    public string Email { get; private set; } = null!;
-    public string PasswordHash { get; private set; } = null!;
-    public DateTime CreatedAt { get; private set; }
-    public DateTime? LastLoginAt { get; private set; }
-    public bool IsActive { get; private set; }
-
-    private UserIdentity() { } // For deserialization
+    private UserIdentity()
+    {
+    } // For deserialization
 
     private UserIdentity(Guid id, Guid userId, string email, string passwordHash)
     {
@@ -31,11 +26,18 @@ public class UserIdentity : AggregateRoot
             Email));
     }
 
+    public Guid UserId { get; }
+    public string Email { get; } = null!;
+    public string PasswordHash { get; private set; } = null!;
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? LastLoginAt { get; private set; }
+    public bool IsActive { get; private set; }
+
     public static UserIdentity Create(Guid userId, string email, string passwordHash)
     {
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email cannot be empty", nameof(email));
-        
+
         if (string.IsNullOrWhiteSpace(passwordHash))
             throw new ArgumentException("Password hash cannot be empty", nameof(passwordHash));
 
@@ -58,7 +60,7 @@ public class UserIdentity : AggregateRoot
             throw new ArgumentException("New password hash cannot be empty", nameof(newPasswordHash));
 
         PasswordHash = newPasswordHash;
-        
+
         RaiseDomainEvent(new PasswordChangedDomainEvent(
             Guid.NewGuid(),
             DateTime.UtcNow,

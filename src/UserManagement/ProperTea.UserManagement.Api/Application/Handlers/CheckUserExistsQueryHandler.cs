@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Queries;
 using ProperTea.UserManagement.Api.Domain.Users;
 

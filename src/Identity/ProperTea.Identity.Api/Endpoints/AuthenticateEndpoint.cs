@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Identity.Api.Application.Commands;
 
 namespace ProperTea.Identity.Api.Endpoints;
@@ -13,7 +13,7 @@ public static class AuthenticateEndpoint
             .WithSummary("Authenticate user")
             .WithDescription("Authenticates a user with email and password")
             .WithTags("Identities")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status500InternalServerError)
             .AllowAnonymous(); // Authentication endpoint should allow anonymous access

@@ -1,4 +1,4 @@
-namespace ProperTea.Contracts.Events.Organization;
+namespace ProperTea.Domain.Shared.Events.Organization;
 
 public record OrganizationCreatedEvent(
     Guid Id,

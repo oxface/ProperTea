@@ -1,11 +1,12 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Polly;
 using Polly.Extensions.Http;
-using Scalar.AspNetCore;
-using System.Text.Json.Serialization;
-using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.Landlord.Bff.Endpoints.Organization;
 using ProperTea.Landlord.Bff.Endpoints.User;
+using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,7 @@ builder.Services.AddHttpClient("gateway", client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-LandlordBff/1.0");
         client.BaseAddress = new Uri("https://gateway");
+        client.Timeout = TimeSpan.FromSeconds(300);
     })
     .AddServiceDiscovery()
     .AddPolicyHandler(retryPolicy);
@@ -48,13 +50,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("LandlordPortalPolicy", policy =>
     {
-        var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
-            ?? new[] { "http://localhost:3000", "https://localhost:3001" };
-        
+        var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+                             ?? new[] { "http://localhost:3000", "https://localhost:3001" };
+
         policy.WithOrigins(allowedOrigins)
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials();
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
 

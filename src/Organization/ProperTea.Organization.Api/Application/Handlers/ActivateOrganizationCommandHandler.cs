@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Commands;
 using ProperTea.Organization.Api.Domain.Organizations;
 
@@ -17,9 +17,7 @@ public class ActivateOrganizationCommandHandler : ICommandHandler<ActivateOrgani
     {
         var organization = await _organizationRepository.GetByIdAsync(command.OrganizationId, cancellationToken);
         if (organization == null)
-        {
             throw new InvalidOperationException($"Organization with ID '{command.OrganizationId}' not found");
-        }
 
         organization.Activate();
         await _organizationRepository.SaveAsync(organization, cancellationToken);

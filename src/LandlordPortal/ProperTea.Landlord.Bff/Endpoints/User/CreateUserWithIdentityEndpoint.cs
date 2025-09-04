@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using ProperTea.Shared.Infrastructure.Extensions;
 
 namespace ProperTea.Landlord.Bff.Endpoints.User;
 
-public static class CreateUserEndpoint
+public static class CreateUserWithIdentityEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
@@ -11,7 +12,7 @@ public static class CreateUserEndpoint
             .WithSummary("Create a new user")
             .WithDescription("Creates a new user with identity through workflow orchestrator")
             .WithTags("Users")
-            .Produces<CreateUserWithIdentityResponse>(StatusCodes.Status200OK)
+            .Produces<CreateUserWithIdentityResponse>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
@@ -28,23 +29,13 @@ public static class CreateUserEndpoint
         var gatewayClient = httpClientFactory.CreateClient("gateway");
         try
         {
-            var response = await gatewayClient.PostAsJsonAsync(
-                "/api/workflows/users", 
-                request, 
+            var response = await gatewayClient.PostAsync<CreateUserWithIdentityRequest, CreateUserWithIdentityResponse>(
+                "/api/workflows/users",
+                request,
+                logger,
                 cancellationToken);
-            
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogError("Failed to create user via WorkflowOrchestrator");
-                return Results.Problem(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    title: "Failed to create user",
-                    detail: "The workflow orchestrator did not return a valid response");
-            }
 
-            var result = await response.Content.ReadFromJsonAsync<CreateUserWithIdentityResponse>(
-                cancellationToken: cancellationToken);
-            logger.LogInformation("User created successfully: {UserId}", result!.UserId);
+            logger.LogInformation("User created successfully: {UserId}", response!.UserId);
             return Results.Ok(response);
         }
         catch (Exception ex)

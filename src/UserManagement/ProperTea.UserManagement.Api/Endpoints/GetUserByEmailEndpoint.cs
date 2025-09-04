@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
@@ -13,7 +13,7 @@ public static class GetUserByEmailEndpoint
             .WithSummary("Get user by email")
             .WithDescription("Retrieves a user by their email address")
             .WithTags("Users")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError)
             .RequireAuthorization();
@@ -27,7 +27,7 @@ public static class GetUserByEmailEndpoint
         try
         {
             var query = new GetUserByEmailQuery(email);
-            var result = await queryBus.SendAsync(query);
+            var result = await queryBus.SendAsync<GetUserByEmailQuery, SystemUserModel>(query);
 
             if (result == null)
             {

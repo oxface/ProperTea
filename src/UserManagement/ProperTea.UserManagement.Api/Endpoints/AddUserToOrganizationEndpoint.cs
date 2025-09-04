@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Commands;
 using ProperTea.UserManagement.Api.Domain.Users;
 
@@ -14,7 +14,7 @@ public static class AddUserToOrganizationEndpoint
             .WithSummary("Add user to organization")
             .WithDescription("Adds a user to an organization with a specific role")
             .WithTags("Users")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             .RequireAuthorization();
@@ -40,13 +40,13 @@ public static class AddUserToOrganizationEndpoint
         }
         catch (InvalidOperationException ex)
         {
-            logger.LogWarning(ex, "Invalid operation when adding user {UserId} to organization {OrganizationId}", 
+            logger.LogWarning(ex, "Invalid operation when adding user {UserId} to organization {OrganizationId}",
                 request.UserId, request.OrganizationId);
             return Results.BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error adding user {UserId} to organization {OrganizationId}", 
+            logger.LogError(ex, "Error adding user {UserId} to organization {OrganizationId}",
                 request.UserId, request.OrganizationId);
             return Results.Problem(
                 statusCode: StatusCodes.Status500InternalServerError,

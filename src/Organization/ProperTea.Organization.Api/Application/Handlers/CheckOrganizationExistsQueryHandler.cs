@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Queries;
 using ProperTea.Organization.Api.Domain.Organizations;
 
@@ -13,7 +13,8 @@ public class CheckOrganizationExistsQueryHandler : IQueryHandler<CheckOrganizati
         _organizationRepository = organizationRepository;
     }
 
-    public async Task<bool> HandleAsync(CheckOrganizationExistsQuery query, CancellationToken cancellationToken = default)
+    public async Task<bool> HandleAsync(CheckOrganizationExistsQuery query,
+        CancellationToken cancellationToken = default)
     {
         return await _organizationRepository.ExistsAsync(query.OrganizationId, cancellationToken);
     }

@@ -6,7 +6,7 @@ public static class UserEndpoints
     {
         var group = app.MapGroup("/api/users")
             .WithTags("Users");
-        
-        CreateUserEndpoint.Map(app);
+
+        CreateUserWithIdentityEndpoint.Map(app);
     }
 }

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Commands;
 using ProperTea.Organization.Api.DTOs;
 
@@ -14,7 +14,7 @@ public static class CreateOrganizationEndpoint
             .WithSummary("Create a new organization")
             .WithDescription("Creates a new organization with the specified details")
             .WithTags("Organizations")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)

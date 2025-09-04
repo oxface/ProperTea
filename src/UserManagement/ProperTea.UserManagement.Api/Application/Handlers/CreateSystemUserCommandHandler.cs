@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.UserManagement.Api.Application.Commands;
 using ProperTea.UserManagement.Api.Domain.Users;
 
@@ -17,9 +17,7 @@ public class CreateSystemUserCommandHandler : ICommandHandler<CreateSystemUserCo
     {
         var existingUser = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
         if (existingUser != null)
-        {
             throw new InvalidOperationException($"User with email '{command.Email}' already exists");
-        }
 
         var user = SystemUser.Create(command.Email, command.FullName);
         await _userRepository.SaveAsync(user, cancellationToken);

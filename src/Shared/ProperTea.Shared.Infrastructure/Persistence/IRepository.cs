@@ -1,6 +1,6 @@
-using ProperTea.Infrastructure.Shared.Domain;
+using ProperTea.Shared.Infrastructure.Domain;
 
-namespace ProperTea.Infrastructure.Shared.Persistence;
+namespace ProperTea.Shared.Infrastructure.Persistence;
 
 public interface IRepository<T> where T : AggregateRoot
 {

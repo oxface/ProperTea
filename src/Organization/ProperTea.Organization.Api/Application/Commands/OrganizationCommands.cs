@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 
 namespace ProperTea.Organization.Api.Application.Commands;
 

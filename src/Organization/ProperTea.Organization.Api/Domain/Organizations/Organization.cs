@@ -1,17 +1,13 @@
-using ProperTea.Infrastructure.Shared.Domain;
-using ProperTea.Contracts.Events;
+using ProperTea.Domain.Shared.Events;
+using ProperTea.Shared.Infrastructure.Domain;
 
 namespace ProperTea.Organization.Api.Domain.Organizations;
 
 public class Organization : AggregateRoot
 {
-    public string Name { get; private set; } = null!;
-    public string Description { get; private set; } = null!;
-    public DateTime CreatedAt { get; private set; }
-    public bool IsActive { get; private set; }
-    public Guid CreatedByUserId { get; private set; }
-
-    private Organization() { } // For deserialization
+    private Organization()
+    {
+    } // For deserialization
 
     private Organization(Guid id, string name, string description, Guid createdByUserId)
     {
@@ -29,6 +25,12 @@ public class Organization : AggregateRoot
             Name,
             CreatedByUserId));
     }
+
+    public string Name { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
+    public DateTime CreatedAt { get; private set; }
+    public bool IsActive { get; private set; }
+    public Guid CreatedByUserId { get; }
 
     public static Organization Create(string name, string description, Guid createdByUserId)
     {

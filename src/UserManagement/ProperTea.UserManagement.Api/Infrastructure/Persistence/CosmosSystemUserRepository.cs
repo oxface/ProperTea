@@ -1,12 +1,13 @@
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Shared.Cosmos;
+using ProperTea.Shared.Infrastructure.Cosmos;
 using ProperTea.UserManagement.Api.Domain.Users;
 
 namespace ProperTea.UserManagement.Api.Infrastructure.Persistence;
 
 public class CosmosSystemUserRepository : CosmosRepository<SystemUser>, ISystemUserRepository
 {
-    public CosmosSystemUserRepository(CosmosClient cosmosClient, string databaseName, string containerName, string partitionKey = "/id") 
+    public CosmosSystemUserRepository(CosmosClient cosmosClient, string databaseName, string containerName,
+        string partitionKey = "/id")
         : base(cosmosClient, databaseName, containerName, partitionKey)
     {
     }

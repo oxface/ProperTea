@@ -1,13 +1,13 @@
-using ProperTea.Contracts.Events;
+using ProperTea.Domain.Shared.Events;
 
-namespace ProperTea.Infrastructure.Shared.Domain;
+namespace ProperTea.Shared.Infrastructure.Domain;
 
 public abstract class AggregateRoot
 {
     private readonly List<DomainEvent> _domainEvents = [];
-    
+
     public Guid Id { get; protected init; }
-    
+
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     protected void RaiseDomainEvent(DomainEvent domainEvent)
@@ -23,12 +23,12 @@ public abstract class AggregateRoot
 
 public abstract class Entity
 {
-    public Guid Id { get; protected init; }
-
     protected Entity(Guid id)
     {
         Id = id;
     }
+
+    public Guid Id { get; protected init; }
 
     public override bool Equals(object? obj)
     {
@@ -38,7 +38,10 @@ public abstract class Entity
         return Id == other.Id;
     }
 
-    public override int GetHashCode() => Id.GetHashCode();
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
 }
 
 public abstract record ValueObject;

@@ -1,9 +1,11 @@
 using Microsoft.Azure.Cosmos;
-using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.Cqrs;
 using ProperTea.Identity.Api.Application.Handlers;
 using ProperTea.Identity.Api.Domain.Identities;
 using ProperTea.Identity.Api.Endpoints;
 using ProperTea.Identity.Api.Infrastructure.Persistence;
+using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +19,7 @@ builder.Services.AddGlobalErrorHandling("ProperTea.Identity.Api");
 
 builder.Services.AddSingleton<CosmosClient>(serviceProvider =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("CosmosDb") ?? 
+    var connectionString = builder.Configuration.GetConnectionString("CosmosDb") ??
                            throw new InvalidOperationException("CosmosDb connection string is not configured.");
     return new CosmosClient(connectionString);
 });
@@ -29,8 +31,8 @@ builder.Services.AddScoped<Container>(serviceProvider =>
 });
 
 builder.Services.AddProperCqrs();
-
-builder.Services.AddCommandHandlers(typeof(CreateIdentityCommandHandler));
+builder.Services.AddProperCqrsCommandHandlers(typeof(CreateIdentityCommandHandler).Assembly);
+builder.Services.AddProperCqrsQueryHandlers(typeof(CreateIdentityCommandHandler).Assembly);
 
 builder.Services.AddScoped<IUserIdentityRepository, CosmosUserIdentityRepository>();
 

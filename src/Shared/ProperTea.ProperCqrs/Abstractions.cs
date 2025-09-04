@@ -1,8 +1,8 @@
-namespace ProperTea.Contracts.CQRS;
+namespace ProperTea.Cqrs;
 
 public interface ICommand;
 
-public interface IQuery<TResult>;
+public interface IQuery;
 
 public interface ICommandHandler<in TCommand>
     where TCommand : ICommand
@@ -11,7 +11,7 @@ public interface ICommandHandler<in TCommand>
 }
 
 public interface IQueryHandler<in TQuery, TResult>
-    where TQuery : IQuery<TResult>
+    where TQuery : IQuery
 {
     Task<TResult> HandleAsync(TQuery query, CancellationToken cancellationToken = default);
 }
@@ -24,5 +24,6 @@ public interface ICommandBus
 
 public interface IQueryBus
 {
-    Task<TResult> SendAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default);
+    Task<TResult> SendAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
+        where TQuery : IQuery;
 }

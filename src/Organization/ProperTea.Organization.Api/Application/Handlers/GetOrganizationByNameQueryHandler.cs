@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Models;
 using ProperTea.Organization.Api.Application.Queries;
 using ProperTea.Organization.Api.Domain.Organizations;
@@ -8,13 +8,11 @@ namespace ProperTea.Organization.Api.Application.Handlers;
 public class GetOrganizationByNameQueryHandler(IOrganizationRepository organizationRepository)
     : IQueryHandler<GetOrganizationByNameQuery, OrganizationModel?>
 {
-    public async Task<OrganizationModel?> HandleAsync(GetOrganizationByNameQuery query, CancellationToken cancellationToken = default)
+    public async Task<OrganizationModel?> HandleAsync(GetOrganizationByNameQuery query,
+        CancellationToken cancellationToken = default)
     {
         var organization = await organizationRepository.GetByNameAsync(query.Name, cancellationToken);
-        
-        return organization == null ? null : new OrganizationModel(
-            organization.Id,
-            organization.Name,
-            organization.Description);
+
+        return organization == null ? null : OrganizationModel.FromEntity(organization);
     }
 }

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Identity.Api.Application.Commands;
 
 namespace ProperTea.Identity.Api.Endpoints;
@@ -13,7 +13,7 @@ public static class CreateIdentityEndpoint
             .WithSummary("Create a new identity")
             .WithDescription("Creates a new identity with email and password credentials")
             .WithTags("Identities")
-            .Produces<object>(StatusCodes.Status200OK)
+            .Produces<object>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)

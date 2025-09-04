@@ -1,4 +1,4 @@
-namespace ProperTea.Contracts.Events;
+namespace ProperTea.Domain.Shared.Events;
 
 public abstract record DomainEvent(Guid Id, DateTime OccurredAt);
 

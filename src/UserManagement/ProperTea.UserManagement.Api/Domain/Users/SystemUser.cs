@@ -1,19 +1,15 @@
-using ProperTea.Infrastructure.Shared.Domain;
-using ProperTea.Contracts.Events;
+using ProperTea.Domain.Shared.Events;
+using ProperTea.Shared.Infrastructure.Domain;
 
 namespace ProperTea.UserManagement.Api.Domain.Users;
 
 public class SystemUser : AggregateRoot
 {
-    public string Email { get; private set; } = null!;
-    public string FullName { get; private set; } = null!;
-    public DateTime CreatedAt { get; private set; }
-    public bool IsActive { get; private set; }
-    
     private readonly List<OrganizationMembership> _organizationMemberships = [];
-    public IReadOnlyCollection<OrganizationMembership> OrganizationMemberships => _organizationMemberships.AsReadOnly();
 
-    private SystemUser() { } // For deserialization
+    private SystemUser()
+    {
+    } // For deserialization
 
     private SystemUser(Guid id, string email, string fullName)
     {
@@ -31,11 +27,17 @@ public class SystemUser : AggregateRoot
             FullName));
     }
 
+    public string Email { get; } = null!;
+    public string FullName { get; private set; } = null!;
+    public DateTime CreatedAt { get; private set; }
+    public bool IsActive { get; private set; }
+    public IReadOnlyCollection<OrganizationMembership> OrganizationMemberships => _organizationMemberships.AsReadOnly();
+
     public static SystemUser Create(string email, string fullName)
     {
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email cannot be empty", nameof(email));
-        
+
         if (string.IsNullOrWhiteSpace(fullName))
             throw new ArgumentException("Full name cannot be empty", nameof(fullName));
 
@@ -69,12 +71,9 @@ public class SystemUser : AggregateRoot
 
 public class OrganizationMembership
 {
-    public Guid Id { get; private set; }
-    public Guid OrganizationId { get; private set; }
-    public UserRole Role { get; private set; }
-    public DateTime JoinedAt { get; private set; }
-
-    private OrganizationMembership() { } // For deserialization
+    private OrganizationMembership()
+    {
+    } // For deserialization
 
     public OrganizationMembership(Guid id, Guid organizationId, UserRole role, DateTime joinedAt)
     {
@@ -83,6 +82,11 @@ public class OrganizationMembership
         Role = role;
         JoinedAt = joinedAt;
     }
+
+    public Guid Id { get; private set; }
+    public Guid OrganizationId { get; }
+    public UserRole Role { get; private set; }
+    public DateTime JoinedAt { get; private set; }
 }
 
 public enum UserRole

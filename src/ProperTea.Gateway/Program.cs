@@ -1,7 +1,10 @@
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Threading.RateLimiting;
-using ProperTea.Infrastructure.Shared.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,30 +60,28 @@ builder.Services.AddRateLimiter(options =>
 {
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
         RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            factory: partition => new FixedWindowRateLimiterOptions
+            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            partition => new FixedWindowRateLimiterOptions
             {
                 AutoReplenishment = true,
                 PermitLimit = globalLimit,
                 Window = TimeSpan.FromMinutes(windowMinutes)
             }));
-    
+
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 });
 
 builder.Services.AddHealthChecks()
     .AddCheck("gateway-health",
-        () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy("Gateway is running"), ["ready"]);
+        () => HealthCheckResult.Healthy("Gateway is running"), ["ready"]);
 
 if (builder.Environment.IsDevelopment())
-{
     builder.Services.AddHttpLogging(options =>
     {
-        options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+        options.LoggingFields = HttpLoggingFields.All;
         options.RequestBodyLogLimit = 4096;
         options.ResponseBodyLogLimit = 4096;
     });
-}
 
 var app = builder.Build();
 
@@ -115,10 +116,10 @@ app.Use(async (context, next) =>
 {
     var correlationId = context.Request.Headers["X-Correlation-ID"].FirstOrDefault() ?? Guid.NewGuid().ToString();
     context.Response.Headers.Append("X-Correlation-ID", correlationId);
-    
+
     using var scope = app.Services.GetRequiredService<ILogger<Program>>()
         .BeginScope(new Dictionary<string, object> { ["CorrelationId"] = correlationId });
-    
+
     await next();
 });
 
@@ -128,16 +129,16 @@ app.MapReverseProxy(proxyPipeline =>
     {
         var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
         var route = context.GetReverseProxyFeature()?.Route;
-        
-        logger.LogInformation("Proxying request to cluster {ClusterId} for path {RequestPath} with method {HttpMethod}", 
-            route?.Config?.ClusterId ?? "unknown", 
-            context.Request.Path, 
+
+        logger.LogInformation("Proxying request to cluster {ClusterId} for path {RequestPath} with method {HttpMethod}",
+            route?.Config?.ClusterId ?? "unknown",
+            context.Request.Path,
             context.Request.Method);
-        
+
         await next();
-        
-        logger.LogInformation("Proxy response completed with status {StatusCode} for cluster {ClusterId}", 
-            context.Response.StatusCode, 
+
+        logger.LogInformation("Proxy response completed with status {StatusCode} for cluster {ClusterId}",
+            context.Response.StatusCode,
             route?.Config?.ClusterId ?? "unknown");
     });
 });

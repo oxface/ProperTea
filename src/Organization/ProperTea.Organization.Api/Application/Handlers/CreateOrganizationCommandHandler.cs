@@ -1,4 +1,4 @@
-using ProperTea.Contracts.CQRS;
+using ProperTea.Cqrs;
 using ProperTea.Organization.Api.Application.Commands;
 using ProperTea.Organization.Api.Domain.Organizations;
 
@@ -15,12 +15,9 @@ public class CreateOrganizationCommandHandler : ICommandHandler<CreateOrganizati
 
     public async Task HandleAsync(CreateOrganizationCommand command, CancellationToken cancellationToken = default)
     {
-        // Check if organization with same name already exists
         var existingOrganization = await _organizationRepository.GetByNameAsync(command.Name, cancellationToken);
         if (existingOrganization != null)
-        {
             throw new InvalidOperationException($"Organization with name '{command.Name}' already exists");
-        }
 
         var organization = Domain.Organizations.Organization.Create(
             command.Name,
