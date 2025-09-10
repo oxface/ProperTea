@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProperTea.Cqrs;
-using ProperTea.UserManagement.Api.Application.Commands;
-using ProperTea.UserManagement.Api.Application.Queries;
+using ProperTea.UserManagement.Application.Commands;
+using ProperTea.UserManagement.Application.Models;
+using ProperTea.UserManagement.Application.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
 
@@ -17,8 +18,7 @@ public static class CreateUserEndpoint
             .Produces<object>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
-            .Produces(StatusCodes.Status500InternalServerError)
-            .RequireAuthorization();
+            .Produces(StatusCodes.Status500InternalServerError);
     }
 
     private static async Task<IResult> HandleAsync(

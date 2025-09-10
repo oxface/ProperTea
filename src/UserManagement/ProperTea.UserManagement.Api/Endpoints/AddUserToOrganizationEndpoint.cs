@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProperTea.Cqrs;
-using ProperTea.UserManagement.Api.Application.Commands;
-using ProperTea.UserManagement.Api.Domain.Users;
+using ProperTea.UserManagement.Application.Commands;
+using ProperTea.UserManagement.Domain.SystemUsers;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
 
@@ -27,7 +27,7 @@ public static class AddUserToOrganizationEndpoint
     {
         try
         {
-            if (!Enum.TryParse<UserRole>(request.Role, out var role))
+            if (!Enum.TryParse<SystemUserOrganizationRole>(request.Role, out var role))
             {
                 logger.LogWarning("Invalid role provided: {Role}", request.Role);
                 return Results.BadRequest("Invalid role");

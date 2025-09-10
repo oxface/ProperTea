@@ -12,8 +12,8 @@
     <ItemGroup>
         <PackageReference Include="Aspire.Hosting.AppHost" Version="9.4.2"/>
         <PackageReference Include="Aspire.Hosting.Azure.AppContainers" Version="9.4.2"/>
-        <PackageReference Include="Aspire.Hosting.Azure.CosmosDB" Version="9.4.2"/>
         <PackageReference Include="Aspire.Hosting.Azure.Functions" Version="9.4.2-preview.1.25428.12"/>
+        <PackageReference Include="Aspire.Hosting.Azure.Sql" Version="9.4.2"/>
         <PackageReference Include="Aspire.Hosting.Yarp" Version="9.4.2-preview.1.25428.12"/>
     </ItemGroup>
 
@@ -22,5 +22,6 @@
         <ProjectReference Include="..\Orchestration\ProperTea.WorkflowOrchestrator\ProperTea.WorkflowOrchestrator.csproj"/>
         <ProjectReference Include="..\ProperTea.Gateway\ProperTea.Gateway.csproj"/>
         <ProjectReference Include="..\UserManagement\ProperTea.UserManagement.Api\ProperTea.UserManagement.Api.csproj"/>
+        <ProjectReference Include="..\UserManagement\ProperTea.UserManagement.MigrationService\ProperTea.UserManagement.MigrationService.csproj"/>
     </ItemGroup>
 </Project>

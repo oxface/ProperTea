@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Shared.Infrastructure.Extensions;
+using ProperTea.Infrastructure.Shared.Extensions;
 
 namespace ProperTea.WorkflowOrchestrator.Endpoints.Organization;
 

@@ -9,15 +9,15 @@
 
     <ItemGroup>
         <ProjectReference Include="../Shared/ProperTea.ServiceDefaults/ProperTea.ServiceDefaults.csproj"/>
-        <ProjectReference Include="..\Shared\ProperTea.Shared.Infrastructure\ProperTea.Shared.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Shared\ProperTea.Infrastructure.Shared\ProperTea.Infrastructure.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.7.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9"/>
+        <PackageReference Include="Scalar.AspNetCore" Version="2.8.0"/>
         <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8"/>
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.8"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.9"/>
         <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" Version="9.4.2"/>
     </ItemGroup>
 

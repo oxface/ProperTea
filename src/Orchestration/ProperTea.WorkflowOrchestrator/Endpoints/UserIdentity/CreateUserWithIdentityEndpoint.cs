@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Shared.Infrastructure.Extensions;
+using ProperTea.Infrastructure.Shared.Extensions;
 
 namespace ProperTea.WorkflowOrchestrator.Endpoints.UserIdentity;
 
@@ -53,7 +53,8 @@ public static class CreateUserWithIdentityEndpoint
                 logger,
                 cancellationToken);
 
-            if (createUserResponse == null) throw new InvalidOperationException("Failed to create user");
+            if (createUserResponse == null)
+                throw new InvalidOperationException("Failed to create user");
 
             userId = createUserResponse!.UserId;
             userCreated = true;

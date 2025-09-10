@@ -8,16 +8,30 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared\ProperTea.Shared.Infrastructure\ProperTea.Shared.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\Shared\ProperTea.Infrastructure.Shared\ProperTea.Infrastructure.Shared.csproj"/>
         <ProjectReference Include="../../Shared/ProperTea.ServiceDefaults/ProperTea.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\ProperTea.UserManagement.Application\ProperTea.UserManagement.Application.csproj"/>
+        <ProjectReference Include="..\ProperTea.UserManagement.Domain\ProperTea.UserManagement.Domain.csproj"/>
+        <ProjectReference Include="..\ProperTea.UserManagement.Infrastructure\ProperTea.UserManagement.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8"/>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.7.2"/>
-        <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.53.1"/>
+        <PackageReference Include="FluentValidation" Version="12.0.0"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Scalar.AspNetCore" Version="2.8.0"/>
         <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.20.1"/>
+        <PackageReference Include="Scrutor" Version="6.1.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Infrastructure\"/>
     </ItemGroup>
 
 </Project>

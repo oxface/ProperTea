@@ -1,5 +1,6 @@
 using ProperTea.Cqrs;
-using ProperTea.UserManagement.Api.Application.Queries;
+using ProperTea.UserManagement.Application.Models;
+using ProperTea.UserManagement.Application.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
 

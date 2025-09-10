@@ -1,13 +1,12 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Azure.Cosmos;
+using Microsoft.EntityFrameworkCore;
 using ProperTea.Cqrs;
+using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.ServiceDefaults;
-using ProperTea.Shared.Infrastructure.Extensions;
-using ProperTea.UserManagement.Api.Application.Handlers;
-using ProperTea.UserManagement.Api.Domain.Users;
+using ProperTea.UserManagement.Api.Configuration;
 using ProperTea.UserManagement.Api.Endpoints;
-using ProperTea.UserManagement.Api.Infrastructure.Persistence;
+using ProperTea.UserManagement.Infrastructure.Persistence;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,22 +38,19 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddGlobalErrorHandling("ProperTea.UserManagement.Api");
 
-builder.Services.AddScoped<CosmosClient>(serviceProvider =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("propertea-cosmos")
-                           ?? throw new InvalidOperationException("CosmosDb connection string is not configured.");
-    return new CosmosClient(connectionString);
-});
-
 builder.Services.AddProperCqrs();
-builder.Services.AddProperCqrsCommandHandlers(typeof(CreateSystemUserCommandHandler).Assembly);
-builder.Services.AddProperCqrsQueryHandlers(typeof(GetUserByIdQueryHandler).Assembly);
 
-builder.Services.AddScoped<ISystemUserRepository, CosmosSystemUserRepository>(f =>
-    new CosmosSystemUserRepository(f.GetRequiredService<CosmosClient>(),
-        "propertea-user-management-db",
-        "users"));
+builder.Services
+    .AddDomainServices()
+    .AddInfrastructureServices()
+    .AddApplicationServices();
 
+builder.Services.AddDbContext<UserManagementDbContext>(options =>
+{
+    var connection = builder.Configuration.GetConnectionString("propertea-user-management-db");
+    options.UseSqlServer(connection);
+});
+builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<UserManagementDbContext>());
 
 var app = builder.Build();
 

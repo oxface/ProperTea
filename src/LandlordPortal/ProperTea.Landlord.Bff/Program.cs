@@ -1,11 +1,12 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Timeouts;
 using Polly;
 using Polly.Extensions.Http;
+using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.Landlord.Bff.Endpoints.Organization;
 using ProperTea.Landlord.Bff.Endpoints.User;
 using ProperTea.ServiceDefaults;
-using ProperTea.Shared.Infrastructure.Extensions;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,10 +42,15 @@ builder.Services.AddHttpClient("gateway", client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-LandlordBff/1.0");
         client.BaseAddress = new Uri("https://gateway");
-        client.Timeout = TimeSpan.FromSeconds(300);
     })
     .AddServiceDiscovery()
     .AddPolicyHandler(retryPolicy);
+
+builder.Services.AddRequestTimeouts(options =>
+{
+    options.DefaultPolicy =
+        new RequestTimeoutPolicy { Timeout = TimeSpan.FromMilliseconds(300) };
+});
 
 builder.Services.AddCors(options =>
 {
