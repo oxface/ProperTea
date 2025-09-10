@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Shared\ProperTea.Application.Shared\ProperTea.Application.Shared.csproj"/>
+        <ProjectReference Include="..\..\Shared\ProperTea.ProperCqrs\ProperTea.ProperCqrs.csproj"/>
+        <ProjectReference Include="..\ProperTea.UserManagement.Domain\ProperTea.UserManagement.Domain.csproj"/>
+    </ItemGroup>
+
+</Project>
