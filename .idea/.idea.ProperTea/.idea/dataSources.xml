@@ -8,5 +8,20 @@
       <jdbc-url>Server=127.0.0.1,32771;User ID=sa;Password=B3Y0*{sYdvZ5wVumeJUQcU;TrustServerCertificate=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="propertea-azuresql" uuid="3101e48d-96db-470e-b5ca-b683df6f65b7">
+      <driver-ref>sqlserver.jb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
+      <jdbc-url>Server=127.0.0.1,32768;User ID=sa;Password=B3Y0*{sYdvZ5wVumeJUQcU;TrustServerCertificate=true</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="propertea-user-management-db@127.0.0.1" uuid="9fb711dd-1a46-40a2-ad60-1672360b156d">
+      <driver-ref>sqlserver.jb</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
+      <jdbc-url>Server=127.0.0.1,45187;User ID=sa;Password=B3Y0*{sYdvZ5wVumeJUQcU;TrustServerCertificate=true;Database=propertea-user-management-db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

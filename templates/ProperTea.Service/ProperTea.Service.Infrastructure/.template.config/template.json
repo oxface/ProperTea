@@ -1,0 +1,27 @@
+{
+  "author": "Oxface",
+  "name": "Infrastructure project template for ProperTea Service",
+  "identity": "ProperTea.Service.Infrastructure.1.0",
+  "shortName": "propertea-service-infrastructure",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ProperTea.Service.Infrastructure",
+  "symbols": {
+    "Service name": {
+      "type": "parameter",
+      "datatype":"text",
+      "replaces": "ServiceName",
+      "fileRename": "ServiceName",
+      "description": "The service name."
+    },
+    "Aggregate root name": {
+      "type": "parameter",
+      "datatype":"text",
+      "replaces": "AggregateRootName",
+      "fileRename": "AggregateRootName",
+      "description": "The name of the first aggregate root in the project."
+    }
+  }
+}

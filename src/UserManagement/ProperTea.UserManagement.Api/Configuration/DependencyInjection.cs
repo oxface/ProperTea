@@ -1,12 +1,12 @@
 using FluentValidation;
-using ProperTea.Application.Shared;
-using ProperTea.Cqrs;
-using ProperTea.Domain.Shared;
-using ProperTea.Domain.Shared.Events;
-using ProperTea.Infrastructure.Shared.Events;
-using ProperTea.Infrastructure.Shared.Persistence;
-using ProperTea.UserManagement.Application.Commands;
-using ProperTea.UserManagement.Domain.SystemUsers;
+using ProperTea.ProperCqrs;
+using ProperTea.Shared.Application;
+using ProperTea.Shared.Domain;
+using ProperTea.Shared.Domain.Events;
+using ProperTea.Shared.Infrastructure.Events;
+using ProperTea.Shared.Infrastructure.Persistence;
+using ProperTea.UserManagement.Application.Users.Commands;
+using ProperTea.UserManagement.Domain.Users;
 using ProperTea.UserManagement.Infrastructure.Persistence;
 
 namespace ProperTea.UserManagement.Api.Configuration;
@@ -16,7 +16,7 @@ public static class DomainServices
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
         services.Scan(scan => scan
-            .FromAssemblyOf<SystemUser>()
+            .FromAssemblyOf<User>()
             .AddClasses(classes => classes.AssignableTo(typeof(IDomainService)))
             .AsImplementedInterfaces()
             .WithTransientLifetime());
@@ -29,22 +29,22 @@ public static class ApplicationServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssembly(typeof(CreateSystemUserCommandHandler).Assembly);
+        services.AddValidatorsFromAssembly(typeof(CreateUserCommandHandler).Assembly);
 
         services.Scan(scan => scan
-            .FromAssemblyOf<CreateSystemUserCommandHandler>()
+            .FromAssemblyOf<CreateUserCommandHandler>()
             .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<>)))
             .AsImplementedInterfaces()
             .WithTransientLifetime());
 
         services.Scan(scan => scan
-            .FromAssemblyOf<CreateSystemUserCommandHandler>()
+            .FromAssemblyOf<CreateUserCommandHandler>()
             .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
             .AsImplementedInterfaces()
             .WithTransientLifetime());
 
         services.Scan(scan => scan
-            .FromAssemblyOf<CreateSystemUserCommandHandler>()
+            .FromAssemblyOf<CreateUserCommandHandler>()
             .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
             .AsImplementedInterfaces()
             .WithTransientLifetime());
@@ -53,7 +53,7 @@ public static class ApplicationServices
         services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationCommandHandlerDecorator<,>));
 
         services.Scan(scan => scan
-            .FromAssemblyOf<SystemUserCreatedDomainEvent>()
+            .FromAssemblyOf<UserCreatedDomainEvent>()
             .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
@@ -67,7 +67,7 @@ public static class InfrastructureServices
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.Scan(scan => scan
-            .FromAssemblyOf<SystemUserRepository>()
+            .FromAssemblyOf<UserRepository>()
             .AddClasses(classes => classes.AssignableTo(typeof(IRepository<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());

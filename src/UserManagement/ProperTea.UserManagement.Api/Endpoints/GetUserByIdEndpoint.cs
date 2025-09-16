@@ -1,6 +1,6 @@
-using ProperTea.Cqrs;
-using ProperTea.UserManagement.Application.Models;
-using ProperTea.UserManagement.Application.Queries;
+using ProperTea.ProperCqrs;
+using ProperTea.UserManagement.Application.Users.Models;
+using ProperTea.UserManagement.Application.Users.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
 
@@ -12,7 +12,7 @@ public static class GetUserByIdEndpoint
             .WithName("GetUserById")
             .WithSummary("Get user by ID")
             .WithDescription("Retrieves a user by their unique identifier")
-            .WithTags("Users")
+            .WithTags("UserIds")
             .Produces<object>()
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -27,11 +27,11 @@ public static class GetUserByIdEndpoint
         try
         {
             var query = new GetUserByIdQuery(id);
-            var result = await queryBus.SendAsync<GetUserByIdQuery, SystemUserModel>(query);
+            var result = await queryBus.SendAsync<GetUserByIdQuery, UserModel>(query);
 
             if (result == null)
             {
-                logger.LogWarning("User not found: {Id}", id);
+                logger.LogWarning("User not found: {EventId}", id);
                 return Results.NotFound();
             }
 
@@ -39,7 +39,7 @@ public static class GetUserByIdEndpoint
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error getting user: {Id}", id);
+            logger.LogError(ex, "Error getting user: {EventId}", id);
             return Results.Problem(
                 statusCode: StatusCodes.Status500InternalServerError,
                 title: "Internal server error");

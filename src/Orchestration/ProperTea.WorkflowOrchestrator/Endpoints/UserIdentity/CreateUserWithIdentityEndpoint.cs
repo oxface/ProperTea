@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.Shared.Infrastructure.Extensions;
+using ProperTea.WorkflowOrchestrator.Models;
 
 namespace ProperTea.WorkflowOrchestrator.Endpoints.UserIdentity;
 
@@ -12,7 +13,6 @@ public static class CreateUserWithIdentityEndpoint
             .WithSummary("Create a new user with identity")
             .WithDescription("Creates a new user in UserManagement and corresponding identity in Identity service")
             .WithTags("User Workflows")
-            .Produces<CreateUserWithIdentityResponse>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError);
@@ -30,24 +30,14 @@ public static class CreateUserWithIdentityEndpoint
 
         Guid? userId = null;
         var userCreated = false;
+        Guid? identityId = null;
+        var identityCreated = false;
 
         try
         {
-            var userExistsResponse = await gatewayClient.GetAsync<UserExistsResponse>(
-                $"/api/users/exists?email={Uri.EscapeDataString(request.Email)}",
-                logger,
-                cancellationToken);
-
-            if (userExistsResponse?.Exists == true)
-            {
-                logger.LogWarning("User already exists for email {Email}", request.Email);
-                return Results.BadRequest(new { Message = $"User with email {request.Email} already exists" });
-            }
-
-            logger.LogInformation("Creating user in UserManagement service for {Email}", request.Email);
-
+            // Create user.
             var createUserRequest = new CreateUserRequest(request.Email, request.FullName);
-            var createUserResponse = await gatewayClient.PostAsync<CreateUserRequest, CreateUserResponse>(
+            var createUserResponse = await gatewayClient.PostAsync<CreateUserRequest, IdResponse>(
                 "/api/users",
                 createUserRequest,
                 logger,
@@ -56,17 +46,18 @@ public static class CreateUserWithIdentityEndpoint
             if (createUserResponse == null)
                 throw new InvalidOperationException("Failed to create user");
 
-            userId = createUserResponse!.UserId;
+            userId = createUserResponse!.Id;
             userCreated = true;
             logger.LogInformation("User created successfully: {UserId}", userId);
 
+            // Create user identity with user-defined credentials.
             if (!string.IsNullOrEmpty(request.Password))
             {
                 logger.LogInformation("Creating identity for user {UserId}", userId);
 
                 var createIdentityRequest = new CreateIdentityRequest(userId.Value, request.Email, request.Password);
                 var createIdentityResponse =
-                    await gatewayClient.PostAsync<CreateIdentityRequest, CreateIdentityResponse>(
+                    await gatewayClient.PostAsync<CreateIdentityRequest, IdResponse>(
                         "/api/identities",
                         createIdentityRequest,
                         logger,
@@ -75,17 +66,23 @@ public static class CreateUserWithIdentityEndpoint
                 if (createIdentityResponse == null)
                     throw new InvalidOperationException("Failed to create identity for user");
 
+                identityId = createIdentityResponse!.Id;
+                identityCreated = true;
                 logger.LogInformation("Identity created successfully for user {UserId}", userId);
             }
+
+            // Add existing user identity to user.
+            var addUserIdentityRequest = new AddUserIdentityRequest(userId!.Value, identityId!.Value);
+            await gatewayClient.PostAsync(
+                "/api/users/add-identity",
+                addUserIdentityRequest,
+                logger,
+                cancellationToken);
 
             logger.LogInformation("User with identity creation completed for {Email} with ID {UserId}",
                 request.Email, userId);
 
-            return Results.Ok(new CreateUserWithIdentityResponse(
-                userId.Value,
-                request.Email,
-                request.FullName,
-                !string.IsNullOrEmpty(request.Password)));
+            return Results.Ok();
         }
         catch (Exception ex)
         {
@@ -107,6 +104,22 @@ public static class CreateUserWithIdentityEndpoint
                     logger.LogError(compensationEx, "Failed to compensate user creation for {UserId}", userId);
                 }
 
+            if (identityCreated && identityId.HasValue)
+                try
+                {
+                    // await gatewayClient.PostAsync<object, object>(
+                    //     $"/api/users/{userId}/delete",
+                    //     new { },
+                    //     logger,
+                    //     cancellationToken);
+                    // logger.LogInformation("Successfully compensated user creation for {UserId}", userId);
+                }
+                catch (Exception compensationEx)
+                {
+                    logger.LogError(compensationEx, "Failed to compensate user identity creation for {identityId}",
+                        identityId);
+                }
+
             return Results.Problem(
                 statusCode: StatusCodes.Status500InternalServerError,
                 title: "User creation failed",
@@ -120,18 +133,8 @@ public record CreateUserWithIdentityRequest(
     string FullName,
     string? Password = null);
 
-public record CreateUserWithIdentityResponse(
-    Guid UserId,
-    string Email,
-    string FullName,
-    bool IdentityCreated);
-
 public record CreateUserRequest(string Email, string FullName);
-
-public record CreateUserResponse(Guid UserId, string Email, string FullName);
 
 public record CreateIdentityRequest(Guid UserId, string Email, string Password);
 
-public record CreateIdentityResponse(Guid IdentityId, Guid UserId);
-
-public record UserExistsResponse(bool Exists);
+public record AddUserIdentityRequest(Guid UserId, Guid IdentityId);

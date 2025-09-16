@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Cqrs;
-using ProperTea.UserManagement.Application.Commands;
-using ProperTea.UserManagement.Application.Models;
-using ProperTea.UserManagement.Application.Queries;
+using ProperTea.ProperCqrs;
+using ProperTea.UserManagement.Api.Models;
+using ProperTea.UserManagement.Application.Users.Commands;
+using ProperTea.UserManagement.Application.Users.Models;
+using ProperTea.UserManagement.Application.Users.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
 
@@ -14,7 +15,7 @@ public static class CreateUserEndpoint
             .WithName("CreateUser")
             .WithSummary("Create a new user")
             .WithDescription("Creates a new system user with email and full name")
-            .WithTags("Users")
+            .WithTags("UserIds")
             .Produces<object>()
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
@@ -22,20 +23,20 @@ public static class CreateUserEndpoint
     }
 
     private static async Task<IResult> HandleAsync(
-        [FromBody] CreateUserApiRequest request,
+        [FromBody] CreateUserRequest request,
         ICommandBus commandBus,
         IQueryBus queryBus,
         ILogger<Program> logger)
     {
         try
         {
-            var command = new CreateSystemUserCommand(request.Email, request.FullName);
+            var command = new CreateUserCommand(request.Email, request.FullName);
             await commandBus.SendAsync(command);
 
             var query = new GetUserByEmailQuery(request.Email);
-            var user = await queryBus.SendAsync<GetUserByEmailQuery, SystemUserModel>(query);
+            var user = await queryBus.SendAsync<GetUserByEmailQuery, UserModel>(query);
 
-            return Results.Ok(new { UserId = user!.Id });
+            return Results.Ok(new IdResponse(user!.Id));
         }
         catch (InvalidOperationException ex)
         {
@@ -52,4 +53,4 @@ public static class CreateUserEndpoint
     }
 }
 
-public record CreateUserApiRequest(string Email, string FullName);
+public record CreateUserRequest(string Email, string FullName);

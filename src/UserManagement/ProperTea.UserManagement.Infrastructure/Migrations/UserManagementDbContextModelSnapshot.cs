@@ -22,9 +22,9 @@ namespace ProperTea.UserManagement.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProperTea.UserManagement.Domain.SystemUsers.SystemUser", b =>
+            modelBuilder.Entity("ProperTea.UserManagement.Domain.Users.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EventId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -34,16 +34,16 @@ namespace ProperTea.UserManagement.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventId");
 
-                    b.ToTable("SystemUsers");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ProperTea.UserManagement.Domain.SystemUsers.SystemUser", b =>
+            modelBuilder.Entity("ProperTea.UserManagement.Domain.Users.User", b =>
                 {
                     b.OwnsOne("ProperTea.Domain.Shared.ValueObjects.EmailAddress", "Email", b1 =>
                         {
-                            b1.Property<Guid>("SystemUserId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Value")
@@ -51,20 +51,20 @@ namespace ProperTea.UserManagement.Infrastructure.Migrations
                                 .HasMaxLength(200)
                                 .HasColumnType("nvarchar(200)");
 
-                            b1.HasKey("SystemUserId");
+                            b1.HasKey("UserId");
 
                             b1.HasIndex(new[] { "Value" }, "IX_Organization_Name")
                                 .IsUnique();
 
-                            b1.ToTable("SystemUsers");
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
-                                .HasForeignKey("SystemUserId");
+                                .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("ProperTea.Domain.Shared.ValueObjects.PersonFullName", "FullName", b1 =>
+                    b.OwnsOne("ProperTea.UserManagement.Domain.Users.ValueObjects.PersonFullName", "FullName", b1 =>
                         {
-                            b1.Property<Guid>("SystemUserId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Value")
@@ -72,56 +72,33 @@ namespace ProperTea.UserManagement.Infrastructure.Migrations
                                 .HasMaxLength(200)
                                 .HasColumnType("nvarchar(200)");
 
-                            b1.HasKey("SystemUserId");
+                            b1.HasKey("UserId");
 
                             b1.HasIndex(new[] { "Value" }, "IX_Organization_Name")
                                 .IsUnique()
                                 .HasDatabaseName("IX_Organization_Name1");
 
-                            b1.ToTable("SystemUsers");
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
-                                .HasForeignKey("SystemUserId");
+                                .HasForeignKey("UserId");
                         });
 
-                    b.OwnsMany("ProperTea.UserManagement.Domain.SystemUsers.OrganizationMembership", "OrganizationMemberships", b1 =>
+                    b.OwnsMany("ProperTea.UserManagement.Domain.Users.ValueObjects.UserIdentity", "UserIdentities", b1 =>
                         {
-                            b1.Property<Guid>("SystemUserId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<Guid>("Id")
+                            b1.Property<Guid>("EventId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<DateTime>("JoinedAt")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<int>("OrganizationRole")
-                                .HasColumnType("int");
-
-                            b1.HasKey("SystemUserId", "Id");
-
-                            b1.ToTable("OrganizationMembership");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SystemUserId");
-                        });
-
-                    b.OwnsMany("ProperTea.UserManagement.Domain.SystemUsers.UserIdentity", "UserIdentities", b1 =>
-                        {
-                            b1.Property<Guid>("SystemUserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("SystemUserId", "Id");
+                            b1.HasKey("UserId", "EventId");
 
                             b1.ToTable("UserIdentity");
 
                             b1.WithOwner()
-                                .HasForeignKey("SystemUserId");
+                                .HasForeignKey("UserId");
                         });
 
                     b.Navigation("Email")
@@ -129,8 +106,6 @@ namespace ProperTea.UserManagement.Infrastructure.Migrations
 
                     b.Navigation("FullName")
                         .IsRequired();
-
-                    b.Navigation("OrganizationMemberships");
 
                     b.Navigation("UserIdentities");
                 });

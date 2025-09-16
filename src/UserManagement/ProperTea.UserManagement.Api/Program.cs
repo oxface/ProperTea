@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using ProperTea.Cqrs;
-using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.ProperCqrs;
 using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using ProperTea.UserManagement.Api.Configuration;
 using ProperTea.UserManagement.Api.Endpoints;
 using ProperTea.UserManagement.Infrastructure.Persistence;

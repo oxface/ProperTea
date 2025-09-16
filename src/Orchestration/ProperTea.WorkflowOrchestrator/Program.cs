@@ -1,16 +1,16 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Http.Resilience;
 using Polly;
-using Polly.Extensions.Http;
-using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.ServiceDefaults;
-using ProperTea.WorkflowOrchestrator.Endpoints.Organization;
+using ProperTea.Shared.Infrastructure.Extensions;
 using ProperTea.WorkflowOrchestrator.Endpoints.UserIdentity;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
+builder.AddServiceDefaults(
+    false);
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -37,19 +37,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-var retryPolicy = HttpPolicyExtensions
-    .HandleTransientHttpError()
-    .WaitAndRetryAsync(3, retryAttempt =>
-        TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-
 builder.Services.AddHttpClient("gateway", client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-WorkflowOrchestrator/1.0");
         client.BaseAddress = new Uri("https://gateway");
-        client.Timeout = TimeSpan.FromSeconds(300);
     })
     .AddServiceDiscovery()
-    .AddPolicyHandler(retryPolicy);
+    .AddStandardResilienceHandler(o =>
+    {
+        o.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(240);
+        o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(240);
+        o.AttemptTimeout.Timeout = TimeSpan.FromSeconds(120);
+        o.Retry.MaxDelay = TimeSpan.FromSeconds(120);
+        o.Retry.BackoffType = DelayBackoffType.Exponential;
+        o.Retry.DisableForUnsafeHttpMethods();
+    });
+;
 
 var app = builder.Build();
 
@@ -67,7 +70,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapUserWorkflowEndpoints();
-app.MapOrganizationWorkflowEndpoints();
 
 app.MapDefaultEndpoints();
 

@@ -1,0 +1,20 @@
+{
+  "author": "Oxface",
+  "name": "Domain project for ProperTea Service",
+  "identity": "ProperTea.Service.Domain.1.0",
+  "shortName": "propertea-service-domain",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ProperTea.Service.Domain",
+  "symbols": {
+    "Aggregate root name": {
+      "type": "parameter",
+      "datatype":"text",
+      "replaces": "AggregateRootName",
+      "fileRename": "AggregateRootName",
+      "description": "The name of the first aggregate root in the project."
+    }
+  }
+}

@@ -3,8 +3,8 @@ using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

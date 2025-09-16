@@ -5,12 +5,11 @@ public static class UserEndpoints
     public static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/users")
-            .WithTags("Users");
+            .WithTags("UserIds");
 
         CreateUserEndpoint.Map(app);
-        AddUserToOrganizationEndpoint.Map(app);
         GetUserByIdEndpoint.Map(app);
-        GetUserByEmailEndpoint.Map(app);
         CheckUserExistsEndpoint.Map(app);
+        AddUserIdentityEndpoint.Map(app);
     }
 }

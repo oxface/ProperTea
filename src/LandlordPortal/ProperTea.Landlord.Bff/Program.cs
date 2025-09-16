@@ -2,16 +2,15 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Timeouts;
 using Polly;
-using Polly.Extensions.Http;
-using ProperTea.Infrastructure.Shared.Extensions;
 using ProperTea.Landlord.Bff.Endpoints.Organization;
 using ProperTea.Landlord.Bff.Endpoints.User;
 using ProperTea.ServiceDefaults;
+using ProperTea.Shared.Infrastructure.Extensions;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
+builder.AddServiceDefaults(false);
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -33,18 +32,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-var retryPolicy = HttpPolicyExtensions
-    .HandleTransientHttpError()
-    .WaitAndRetryAsync(3, retryAttempt =>
-        TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-
 builder.Services.AddHttpClient("gateway", client =>
     {
         client.DefaultRequestHeaders.Add("User-Agent", "ProperTea-LandlordBff/1.0");
         client.BaseAddress = new Uri("https://gateway");
     })
     .AddServiceDiscovery()
-    .AddPolicyHandler(retryPolicy);
+    .AddStandardResilienceHandler(o =>
+    {
+        o.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(240);
+        o.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(240);
+        o.AttemptTimeout.Timeout = TimeSpan.FromSeconds(120);
+        o.Retry.MaxDelay = TimeSpan.FromSeconds(120);
+        o.Retry.BackoffType = DelayBackoffType.Exponential;
+        o.Retry.Delay = TimeSpan.FromSeconds(10);
+    });
 
 builder.Services.AddRequestTimeouts(options =>
 {

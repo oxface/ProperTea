@@ -7,9 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared\ProperTea.Application.Shared\ProperTea.Application.Shared.csproj"/>
-        <ProjectReference Include="..\..\Shared\ProperTea.ProperCqrs\ProperTea.ProperCqrs.csproj"/>
+        <PackageReference Include="ProperTea.Shared.Application" Version="1.0.1"/>
+        <PackageReference Include="ProperTea.ProperCqrs" Version="1.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\ProperTea.UserManagement.Domain\ProperTea.UserManagement.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Users\"/>
     </ItemGroup>
 
 </Project>

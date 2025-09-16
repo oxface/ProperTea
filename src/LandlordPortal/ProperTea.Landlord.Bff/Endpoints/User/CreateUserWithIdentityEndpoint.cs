@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Infrastructure.Shared.Extensions;
+using ProperTea.Shared.Infrastructure.Extensions;
 
 namespace ProperTea.Landlord.Bff.Endpoints.User;
 

@@ -1,0 +1,20 @@
+{
+  "author": "Oxface",
+  "name": "Application project template for ProperTea Service",
+  "identity": "ProperTea.Service.Application.1.0",
+  "shortName": "propertea-service-application",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ProperTea.Service.Application",
+  "symbols": {
+    "Aggregate root name": {
+      "type": "parameter",
+      "datatype":"text",
+      "replaces": "AggregateRootName",
+      "fileRename": "AggregateRootName",
+      "description": "The name of the first aggregate root in the project."
+    }
+  }
+}

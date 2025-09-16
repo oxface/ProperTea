@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared\ProperTea.Infrastructure.Shared\ProperTea.Infrastructure.Shared.csproj"/>
         <ProjectReference Include="..\ProperTea.UserManagement.Application\ProperTea.UserManagement.Application.csproj"/>
         <ProjectReference Include="..\ProperTea.UserManagement.Domain\ProperTea.UserManagement.Domain.csproj"/>
     </ItemGroup>
@@ -23,6 +22,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="ProperTea.Shared.Infrastructure" Version="1.0.1"/>
     </ItemGroup>
 
 </Project>

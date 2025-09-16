@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ProperTea.Cqrs;
-using ProperTea.UserManagement.Application.Queries;
+using ProperTea.ProperCqrs;
+using ProperTea.UserManagement.Application.Users.Queries;
 
 namespace ProperTea.UserManagement.Api.Endpoints;
 
@@ -12,7 +12,7 @@ public static class CheckUserExistsEndpoint
             .WithName("CheckUserExists")
             .WithSummary("Check if user exists")
             .WithDescription("Checks whether a user exists by their email address")
-            .WithTags("Users")
+            .WithTags("UserIds")
             .Produces<bool>()
             .Produces(StatusCodes.Status500InternalServerError);
     }

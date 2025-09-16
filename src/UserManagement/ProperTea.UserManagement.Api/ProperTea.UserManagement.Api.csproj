@@ -8,8 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared\ProperTea.Infrastructure.Shared\ProperTea.Infrastructure.Shared.csproj"/>
-        <ProjectReference Include="../../Shared/ProperTea.ServiceDefaults/ProperTea.ServiceDefaults.csproj"/>
         <ProjectReference Include="..\ProperTea.UserManagement.Application\ProperTea.UserManagement.Application.csproj"/>
         <ProjectReference Include="..\ProperTea.UserManagement.Domain\ProperTea.UserManagement.Domain.csproj"/>
         <ProjectReference Include="..\ProperTea.UserManagement.Infrastructure\ProperTea.UserManagement.Infrastructure.csproj"/>
@@ -28,10 +26,7 @@
         <PackageReference Include="Scalar.AspNetCore" Version="2.8.0"/>
         <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.20.1"/>
         <PackageReference Include="Scrutor" Version="6.1.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Infrastructure\"/>
+        <PackageReference Include="ProperTea.ServiceDefaults" Version="1.0.1"/>
     </ItemGroup>
 
 </Project>

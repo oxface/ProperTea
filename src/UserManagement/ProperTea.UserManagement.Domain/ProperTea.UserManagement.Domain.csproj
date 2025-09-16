@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared\ProperTea.Domain.Shared\ProperTea.Domain.Shared.csproj"/>
+        <PackageReference Include="ProperTea.Shared.Domain" Version="1.0.1"/>
     </ItemGroup>
 
 </Project>

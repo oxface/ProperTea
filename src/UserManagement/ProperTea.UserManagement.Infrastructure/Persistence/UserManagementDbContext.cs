@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ProperTea.UserManagement.Domain.SystemUsers;
+using ProperTea.UserManagement.Domain.Users;
 
 namespace ProperTea.UserManagement.Infrastructure.Persistence;
 
@@ -14,7 +14,7 @@ public class UserManagementDbContext : DbContext
     {
     }
 
-    public DbSet<SystemUser> SystemUsers { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
